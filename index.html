@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>如果你活在小说里，你会是谁？</title>
+  <style>
+
+:root{
+  --bg:#0f1117;
+  --panel:#171a22;
+  --panel2:#202531;
+  --text:#f3f4f6;
+  --muted:#a9b0bf;
+  --line:#303747;
+  --accent:#e4c07a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:
+  radial-gradient(circle at top left,#232838 0,transparent 38%),
+  radial-gradient(circle at bottom right,#211b25 0,transparent 35%),
+  var(--bg);
+  color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+button{font:inherit}
+.app-shell{max-width:920px;margin:0 auto;padding:28px 18px 60px}
+.panel{background:rgba(23,26,34,.94);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 18px 60px rgba(0,0,0,.24)}
+.hidden{display:none!important}
+.hero{margin-top:7vh;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--accent);font-weight:800}
+h1{font-size:clamp(34px,7vw,64px);line-height:1.05;margin:14px 0}
+h2{font-size:clamp(26px,5vw,42px);margin:6px 0 0}
+h3{margin-top:0}
+.lead{max-width:680px;margin:0 auto 24px;color:var(--muted);font-size:18px;line-height:1.8}
+.small{font-size:13px;color:var(--muted)}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0}
+.feature-grid div,.result-card,.path-card{
+  text-align:left;background:var(--panel2);border:1px solid var(--line);padding:16px;border-radius:16px
+}
+.feature-grid strong{display:block;margin-bottom:6px}
+.feature-grid span{font-size:14px;color:var(--muted);line-height:1.5}
+.primary{border:0;border-radius:999px;padding:13px 24px;background:var(--accent);color:#16130f;font-weight:800;cursor:pointer}
+.primary:hover{filter:brightness(1.05)}
+.quiz-head{display:flex;gap:24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.progress{height:8px;background:#272d39;border-radius:999px;width:220px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);width:0;transition:.35s}
+.story-card{background:linear-gradient(180deg,#202532,#1b1f29);border:1px solid var(--line);border-radius:18px;padding:24px;margin:18px 0}
+.story-card p{font-size:18px;line-height:1.95;white-space:pre-line;margin:0}
+.choices{display:grid;gap:12px}
+.choice{
+  width:100%;text-align:left;padding:16px 18px;border-radius:15px;
+  border:1px solid var(--line);background:#181c25;color:var(--text);cursor:pointer;
+  transition:.18s;line-height:1.6
+}
+.choice:hover{transform:translateY(-1px);border-color:#666f84;background:#1e2430}
+.choice b{color:var(--accent);margin-right:8px}
+.movement{
+  margin-top:16px;padding:14px 16px;border-left:3px solid var(--accent);
+  background:#141820;border-radius:10px;color:var(--muted);line-height:1.7
+}
+.debug{margin-top:16px;color:var(--muted);font-size:13px}
+.debug summary{cursor:pointer}
+.debug code{color:#d9e0ec}
+.result-main{margin:20px 0;padding:24px;border-radius:20px;background:linear-gradient(145deg,#252b39,#181c24);border:1px solid var(--line)}
+.result-main .name{font-size:36px;font-weight:900}
+.result-main .book{color:var(--muted);margin-top:4px}
+.result-main .why{margin-top:18px;line-height:1.8}
+.rank-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rank-row:last-child{border-bottom:0}
+.relationship-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.result-card p,.path-card p{color:var(--muted);line-height:1.7}
+@media(max-width:700px){
+  .feature-grid,.relationship-grid{grid-template-columns:1fr}
+  .quiz-head{display:block}
+  .progress{width:100%;margin-top:14px}
+  .panel{padding:20px}
+}
+
+</style>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="start" class="panel hero">
+      <div class="eyebrow">INTERACTIVE LITERARY MATCH</div>
+      <h1>如果你活在小说里，你会是谁？</h1>
+      <p class="lead">
+        这不是固定题序的人格测试。每一次选择都会改变人物概率，
+        下一道题也会根据当前最难区分的人物动态生成。
+      </p>
+      <div class="feature-grid">
+        <div><strong>动态题路</strong><span>相同第一题答案，也可能遇到不同第二题</span></div>
+        <div><strong>概率更新</strong><span>人物不会因一次选择被粗暴淘汰</span></div>
+        <div><strong>反转机制</strong><span>系统会主动挑战当前领先人物</span></div>
+        <div><strong>文学情境</strong><span>用微型故事，而不是“你是否外向”</span></div>
+      </div>
+      <button id="startBtn" class="primary">进入故事</button>
+      <p class="small">演示版内置 24 个经典文学人物、20 道情境题；数据结构已支持扩展至数百人物。</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="quiz-head">
+        <div>
+          <span id="stepText" class="eyebrow">第 1 题</span>
+          <h2 id="questionTitle">正在选择你的下一段故事…</h2>
+        </div>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+
+      <article class="story-card">
+        <p id="storyText"></p>
+      </article>
+
+      <div id="choices" class="choices"></div>
+
+      <div id="movement" class="movement hidden"></div>
+
+      <details class="debug">
+        <summary>查看“故事如何变化”</summary>
+        <div id="debugText"></div>
+      </details>
+    </section>
+
+    <section id="result" class="panel hidden">
+      <div class="eyebrow">YOUR STORY RESULT</div>
+      <h2>你的故事最后靠近了这些人</h2>
+      <div id="topResult" class="result-main"></div>
+
+      <div class="relationship-grid">
+        <div class="result-card">
+          <h3>最适合与你同行的人</h3>
+          <div id="friendResult"></div>
+        </div>
+        <div class="result-card">
+          <h3>最容易与你产生吸引的人</h3>
+          <div id="loverResult"></div>
+        </div>
+        <div class="result-card">
+          <h3>最可能成为你的对手</h3>
+          <div id="rivalResult"></div>
+        </div>
+      </div>
+
+      <div class="path-card">
+        <h3>你的路径不是固定题序</h3>
+        <p id="pathSummary"></p>
+      </div>
+
+      <button id="restartBtn" class="primary">重新走一次</button>
+      <p class="small">重新开始后，即使前几题回答相同，题序仍可能不同。</p>
+    </section>
+  </main>
+
+  <script>
+
+const CHARACTERS = [
+  {
+    id:"jane_eyre", name:"简·爱", book:"《简·爱》",
+    note:"强烈的尊严感与独立意志；在感情中也不愿放弃自我。",
+    relation:{warm:0.72, steady:0.80, intense:0.74, playful:0.36, dominant:0.44, loyal:0.88}
+  },
+  {
+    id:"elizabeth", name:"伊丽莎白·班内特", book:"《傲慢与偏见》",
+    note:"机敏、独立、敢于判断，也愿意在发现自己错误后修正看法。",
+    relation:{warm:0.82, steady:0.72, intense:0.58, playful:0.82, dominant:0.45, loyal:0.80}
+  },
+  {
+    id:"darcy", name:"达西", book:"《傲慢与偏见》",
+    note:"克制、骄傲而认真；一旦确认感情，会用行动承担。",
+    relation:{warm:0.56, steady:0.88, intense:0.74, playful:0.30, dominant:0.62, loyal:0.90}
+  },
+  {
+    id:"jean_valjean", name:"冉阿让", book:"《悲惨世界》",
+    note:"在苦难后仍选择承担与善意，愿意为他人付出巨大代价。",
+    relation:{warm:0.95, steady:0.92, intense:0.60, playful:0.18, dominant:0.48, loyal:0.96}
+  },
+  {
+    id:"javert", name:"沙威", book:"《悲惨世界》",
+    note:"把秩序与规则置于极高位置，一旦世界观动摇便会陷入剧烈冲突。",
+    relation:{warm:0.24, steady:0.86, intense:0.70, playful:0.10, dominant:0.82, loyal:0.62}
+  },
+  {
+    id:"raskolnikov", name:"拉斯柯尔尼科夫", book:"《罪与罚》",
+    note:"高度自省、孤立又激烈，常把自己推向思想和道德的极端。",
+    relation:{warm:0.42, steady:0.28, intense:0.94, playful:0.16, dominant:0.58, loyal:0.48}
+  },
+  {
+    id:"sonya", name:"索尼娅", book:"《罪与罚》",
+    note:"同情、忍耐与陪伴能力极强，在他人最糟糕的时候仍愿意留下。",
+    relation:{warm:0.98, steady:0.86, intense:0.58, playful:0.20, dominant:0.20, loyal:0.98}
+  },
+  {
+    id:"gatsby", name:"盖茨比", book:"《了不起的盖茨比》",
+    note:"把理想和爱推到近乎神话的位置，愿意为一个想象中的未来下注。",
+    relation:{warm:0.72, steady:0.46, intense:0.96, playful:0.58, dominant:0.58, loyal:0.86}
+  },
+  {
+    id:"nick", name:"尼克·卡拉威", book:"《了不起的盖茨比》",
+    note:"更多时候观察、判断与记录；既能接近热烈的人，也保留自己的距离。",
+    relation:{warm:0.68, steady:0.78, intense:0.38, playful:0.52, dominant:0.28, loyal:0.74}
+  },
+  {
+    id:"santiago", name:"圣地亚哥", book:"《老人与海》",
+    note:"安静、坚韧、独自承担；即使失败也不轻易让尊严被夺走。",
+    relation:{warm:0.72, steady:0.96, intense:0.62, playful:0.22, dominant:0.46, loyal:0.90}
+  },
+  {
+    id:"winston", name:"温斯顿·史密斯", book:"《一九八四》",
+    note:"对被规定的现实保持怀疑，渴望真相、记忆和私人空间。",
+    relation:{warm:0.62, steady:0.40, intense:0.76, playful:0.20, dominant:0.34, loyal:0.62}
+  },
+  {
+    id:"john_savage", name:"野人约翰", book:"《美丽新世界》",
+    note:"追求真实、尊严与意义，对舒适却空洞的生活有强烈抵抗。",
+    relation:{warm:0.56, steady:0.42, intense:0.96, playful:0.12, dominant:0.50, loyal:0.76}
+  },
+  {
+    id:"lenina", name:"莱尼娜", book:"《美丽新世界》",
+    note:"习惯既有秩序与即时满足，但在真正复杂的情感面前会失去熟悉的参照。",
+    relation:{warm:0.74, steady:0.58, intense:0.54, playful:0.76, dominant:0.28, loyal:0.52}
+  },
+  {
+    id:"meursault", name:"默尔索", book:"《局外人》",
+    note:"极少按照社会期待表达情绪，更愿意面对当下事实而非强行赋予意义。",
+    relation:{warm:0.20, steady:0.54, intense:0.34, playful:0.24, dominant:0.22, loyal:0.28}
+  },
+  {
+    id:"hermione", name:"赫敏·格兰杰", book:"《哈利·波特》",
+    note:"准备充分、重视事实和规则，但当规则与重要的人冲突时会行动。",
+    relation:{warm:0.82, steady:0.86, intense:0.60, playful:0.42, dominant:0.56, loyal:0.94}
+  },
+  {
+    id:"harry", name:"哈利·波特", book:"《哈利·波特》",
+    note:"行动快、重朋友、对不公反应强烈，有时会在信息不足时先冲进去。",
+    relation:{warm:0.84, steady:0.58, intense:0.78, playful:0.56, dominant:0.46, loyal:0.98}
+  },
+  {
+    id:"snape", name:"西弗勒斯·斯内普", book:"《哈利·波特》",
+    note:"情感深而不外露，长期记忆、长期承担，也长期隐藏真正动机。",
+    relation:{warm:0.36, steady:0.82, intense:0.92, playful:0.10, dominant:0.72, loyal:0.92}
+  },
+  {
+    id:"frodo", name:"弗罗多·巴金斯", book:"《魔戒》",
+    note:"愿意承担沉重责任，但越接近终点，代价也越明显。",
+    relation:{warm:0.86, steady:0.72, intense:0.64, playful:0.38, dominant:0.24, loyal:0.94}
+  },
+  {
+    id:"sam", name:"山姆·甘吉", book:"《魔戒》",
+    note:"极强的忠诚、务实与照料能力；关键时刻愿意承担别人背不动的重量。",
+    relation:{warm:0.98, steady:0.92, intense:0.58, playful:0.50, dominant:0.24, loyal:1.00}
+  },
+  {
+    id:"aragorn", name:"阿拉贡", book:"《魔戒》",
+    note:"有能力领导，却并不急于证明自己；在责任到来时选择承担。",
+    relation:{warm:0.84, steady:0.92, intense:0.66, playful:0.38, dominant:0.66, loyal:0.96}
+  },
+  {
+    id:"bilbo", name:"比尔博·巴金斯", book:"《霍比特人》",
+    note:"本来偏爱安稳，却会在未知世界中发现自己的机智、勇气与好奇。",
+    relation:{warm:0.82, steady:0.68, intense:0.46, playful:0.82, dominant:0.24, loyal:0.84}
+  },
+  {
+    id:"paul", name:"保罗·厄崔迪", book:"《沙丘》",
+    note:"善于观察局势、承担巨大身份压力，也会被自己的选择推向更大的历史后果。",
+    relation:{warm:0.52, steady:0.78, intense:0.84, playful:0.18, dominant:0.82, loyal:0.72}
+  },
+  {
+    id:"montag", name:"盖伊·蒙塔格", book:"《华氏451度》",
+    note:"从服从既有秩序逐渐转向质疑和逃离，愿意为重新理解世界付出代价。",
+    relation:{warm:0.62, steady:0.50, intense:0.72, playful:0.28, dominant:0.38, loyal:0.60}
+  },
+  {
+    id:"charlie", name:"查理·戈登", book:"《献给阿尔吉侬的花束》",
+    note:"敏感、渴望被理解，在巨大变化中越来越清楚地看到自己和他人的复杂。",
+    relation:{warm:0.88, steady:0.50, intense:0.78, playful:0.42, dominant:0.20, loyal:0.82}
+  }
+];
+
+// 每题不是给角色一个“人格分数”，而是：
+// 这个角色在该具体情境下，选择 A/B/C/D 的相对可能性。
+// confidence 表示文学证据/合理推断的可信度。
+const QUESTIONS = [
+  {
+    id:"forbidden_city", theme:"自由与规则", title:"城墙之外",
+    story:`你生活在一座禁止任何人离开的城市。
+官方一直宣称，城外遍布危险，离开的人没有一个活着回来。
+
+一天深夜，一个陌生人敲响你的窗户。他说自己从城外回来，并知道一条无人看守的旧通道。
+他只给你十分钟决定。`,
+    choices:[
+      "马上跟他走。即使有风险，也要亲眼看看。",
+      "先逼他证明自己真的去过城外。",
+      "不走，但把这件事告诉一个最信任的人。",
+      "表面拒绝，暗中记下路线，等自己准备好再走。"
+    ],
+    p:{
+      jane_eyre:[.12,.26,.16,.46], elizabeth:[.16,.34,.18,.32], darcy:[.08,.38,.16,.38],
+      jean_valjean:[.10,.24,.22,.44], javert:[.03,.50,.34,.13], raskolnikov:[.24,.23,.10,.43],
+      sonya:[.05,.22,.43,.30], gatsby:[.38,.14,.12,.36], nick:[.08,.44,.26,.22],
+      santiago:[.12,.24,.18,.46], winston:[.16,.18,.10,.56], john_savage:[.46,.12,.10,.32],
+      lenina:[.06,.24,.52,.18], meursault:[.18,.30,.20,.32], hermione:[.10,.48,.16,.26],
+      harry:[.42,.20,.10,.28], snape:[.04,.38,.08,.50], frodo:[.18,.28,.22,.32],
+      sam:[.10,.28,.38,.24], aragorn:[.12,.42,.14,.32], bilbo:[.24,.34,.20,.22],
+      paul:[.06,.44,.08,.42], montag:[.24,.22,.12,.42], charlie:[.08,.38,.30,.24]
+    }, confidence:.86
+  },
+  {
+    id:"hidden_fugitive", theme:"忠诚与牺牲", title:"敲门声",
+    story:`战争期间，你把一个正在被追捕的人藏在储藏室里。
+半夜，士兵突然敲门。
+
+他们告诉你：如果发现你窝藏逃犯，不只你，连你的家人也会受罚。
+储藏室里传来极轻的一声碰撞。`,
+    choices:[
+      "直接撒谎，说这里没有任何人。",
+      "不正面回答，想办法拖延并转移士兵注意。",
+      "告诉士兵真相，优先保护家人。",
+      "把决定权交给被藏的人，让他自己决定是否出来。"
+    ],
+    p:{
+      jane_eyre:[.34,.42,.08,.16], elizabeth:[.26,.52,.08,.14], darcy:[.24,.48,.10,.18],
+      jean_valjean:[.58,.32,.03,.07], javert:[.06,.12,.72,.10], raskolnikov:[.30,.44,.08,.18],
+      sonya:[.48,.34,.05,.13], gatsby:[.42,.38,.07,.13], nick:[.16,.50,.18,.16],
+      santiago:[.34,.40,.08,.18], winston:[.36,.44,.07,.13], john_savage:[.52,.26,.08,.14],
+      lenina:[.12,.24,.46,.18], meursault:[.12,.28,.36,.24], hermione:[.34,.50,.04,.12],
+      harry:[.56,.30,.04,.10], snape:[.24,.64,.03,.09], frodo:[.40,.40,.06,.14],
+      sam:[.56,.34,.03,.07], aragorn:[.28,.58,.04,.10], bilbo:[.28,.48,.08,.16],
+      paul:[.18,.62,.06,.14], montag:[.38,.40,.08,.14], charlie:[.30,.40,.14,.16]
+    }, confidence:.90
+  },
+  {
+    id:"dream_departure", theme:"理想与关系", title:"只能带走自己",
+    story:`你得到一个机会，可以实现自己多年以来最大的愿望。
+条件只有一个：三天后必须出发，而且从此永远不能再见现在认识的任何人，也不能解释原因。
+
+机会是真的，而且不会再有第二次。`,
+    choices:[
+      "接受。有些机会一生只有一次。",
+      "拒绝。没有什么值得永久失去所有重要的人。",
+      "先接受，再用三天时间寻找规则的漏洞。",
+      "接受，但先尽可能替留下的人安排好一切。"
+    ],
+    p:{
+      jane_eyre:[.26,.34,.24,.16], elizabeth:[.18,.46,.22,.14], darcy:[.12,.52,.16,.20],
+      jean_valjean:[.06,.62,.10,.22], javert:[.18,.28,.34,.20], raskolnikov:[.38,.18,.30,.14],
+      sonya:[.04,.74,.08,.14], gatsby:[.44,.22,.18,.16], nick:[.16,.48,.22,.14],
+      santiago:[.28,.34,.12,.26], winston:[.34,.24,.28,.14], john_savage:[.40,.26,.20,.14],
+      lenina:[.22,.48,.18,.12], meursault:[.46,.18,.18,.18], hermione:[.14,.38,.34,.14],
+      harry:[.22,.50,.16,.12], snape:[.12,.54,.22,.12], frodo:[.12,.54,.16,.18],
+      sam:[.04,.76,.08,.12], aragorn:[.10,.52,.20,.18], bilbo:[.24,.42,.22,.12],
+      paul:[.34,.20,.32,.14], montag:[.34,.28,.24,.14], charlie:[.18,.54,.16,.12]
+    }, confidence:.78
+  },
+  {
+    id:"revenge", theme:"复仇与宽恕", title:"没人会知道",
+    story:`一个曾经故意毁掉你重要生活的人，如今把决定自己前途的文件交到了你手里。
+他不知道你就是当年的受害者。
+
+你只要少递交一页，他就会失去一切；不会有人发现是你做的。`,
+    choices:[
+      "让他失去一切。",
+      "只让他承受与你当年损失相近的代价。",
+      "什么也不做，按正常程序提交。",
+      "不报复，但让他知道：我本来完全可以毁掉你。"
+    ],
+    p:{
+      jane_eyre:[.06,.18,.56,.20], elizabeth:[.05,.16,.62,.17], darcy:[.06,.18,.58,.18],
+      jean_valjean:[.02,.06,.82,.10], javert:[.12,.48,.28,.12], raskolnikov:[.32,.34,.14,.20],
+      sonya:[.01,.05,.88,.06], gatsby:[.18,.30,.32,.20], nick:[.04,.14,.68,.14],
+      santiago:[.04,.12,.70,.14], winston:[.18,.30,.30,.22], john_savage:[.20,.24,.34,.22],
+      lenina:[.08,.20,.58,.14], meursault:[.10,.12,.68,.10], hermione:[.04,.22,.58,.16],
+      harry:[.10,.30,.42,.18], snape:[.28,.30,.18,.24], frodo:[.04,.10,.72,.14],
+      sam:[.02,.08,.80,.10], aragorn:[.03,.12,.70,.15], bilbo:[.04,.12,.70,.14],
+      paul:[.14,.34,.32,.20], montag:[.08,.20,.54,.18], charlie:[.08,.14,.64,.14]
+    }, confidence:.84
+  },
+  {
+    id:"ship_fog", theme:"风险与判断", title:"大雾中的航线",
+    story:`你在一艘远洋船上。夜里突然起了大雾。
+船长判断继续航行风险很大，但如果停船，你们可能错过唯一一次靠岸补给的机会。
+船上只剩三天食物。`,
+    choices:[
+      "支持停船，先避免眼前的致命风险。",
+      "支持继续航行，错过补给可能一样危险。",
+      "要求先测水深、风向和海流，再决定。",
+      "不公开争论，先准备最坏情况下的逃生方案。"
+    ],
+    p:{
+      jane_eyre:[.24,.14,.44,.18], elizabeth:[.18,.20,.50,.12], darcy:[.20,.12,.56,.12],
+      jean_valjean:[.24,.12,.48,.16], javert:[.32,.10,.46,.12], raskolnikov:[.12,.34,.30,.24],
+      sonya:[.34,.10,.40,.16], gatsby:[.12,.44,.30,.14], nick:[.24,.12,.52,.12],
+      santiago:[.18,.24,.44,.14], winston:[.16,.26,.34,.24], john_savage:[.14,.38,.32,.16],
+      lenina:[.38,.14,.34,.14], meursault:[.22,.20,.36,.22], hermione:[.16,.12,.62,.10],
+      harry:[.10,.44,.34,.12], snape:[.14,.14,.50,.22], frodo:[.24,.16,.44,.16],
+      sam:[.32,.12,.42,.14], aragorn:[.14,.16,.60,.10], bilbo:[.24,.18,.46,.12],
+      paul:[.08,.18,.64,.10], montag:[.18,.24,.42,.16], charlie:[.28,.14,.44,.14]
+    }, confidence:.72
+  },
+  {
+    id:"bell_tower", theme:"真相与信任", title:"午夜钟楼",
+    story:`镇上的粮仓昨夜失火，你最好的朋友被捕了。
+有人看到他在附近，警察还从他的房间里找到了粮仓钥匙。
+
+被带走前，他只对你说：“那把钥匙不是我的。”
+晚上，你口袋里突然多出一张纸条：
+“午夜十二点，旧钟楼。如果你还相信他，就一个人来。”`,
+    choices:[
+      "午夜独自去钟楼。",
+      "去，但提前告诉另一个值得信任的人。",
+      "不去，把纸条交给警察。",
+      "先调查钥匙到底从哪里来的。"
+    ],
+    p:{
+      jane_eyre:[.20,.28,.08,.44], elizabeth:[.18,.30,.06,.46], darcy:[.12,.24,.10,.54],
+      jean_valjean:[.22,.30,.06,.42], javert:[.04,.10,.58,.28], raskolnikov:[.32,.18,.06,.44],
+      sonya:[.30,.34,.08,.28], gatsby:[.36,.22,.06,.36], nick:[.10,.24,.14,.52],
+      santiago:[.18,.26,.08,.48], winston:[.24,.24,.08,.44], john_savage:[.34,.20,.06,.40],
+      lenina:[.12,.30,.28,.30], meursault:[.16,.18,.24,.42], hermione:[.10,.24,.05,.61],
+      harry:[.42,.22,.04,.32], snape:[.08,.16,.06,.70], frodo:[.22,.30,.08,.40],
+      sam:[.28,.34,.06,.32], aragorn:[.12,.28,.06,.54], bilbo:[.22,.30,.10,.38],
+      paul:[.08,.18,.06,.68], montag:[.24,.24,.10,.42], charlie:[.16,.28,.12,.44]
+    }, confidence:.82
+  },
+  {
+    id:"packed_bags", theme:"爱情与自我", title:"已经收拾好的行李",
+    story:`你和一个人在陌生城市生活了三年。
+你们一直约好，攒够钱以后一起去海边开一家小店。
+
+出发前一天，对方突然说：
+“我得到了一份梦寐以求的工作。我想留在这里。”
+
+而你的海边机会三天后就会永久失效。`,
+    choices:[
+      "留下来。这个人比原来的计划重要。",
+      "自己去，相信真正的关系可以经受距离。",
+      "再争取一次，希望两个人一起走。",
+      "告诉对方我们都不该为另一个人放弃自己，然后分开。"
+    ],
+    p:{
+      jane_eyre:[.08,.40,.18,.34], elizabeth:[.16,.34,.30,.20], darcy:[.28,.26,.30,.16],
+      jean_valjean:[.34,.24,.28,.14], javert:[.10,.26,.22,.42], raskolnikov:[.18,.24,.20,.38],
+      sonya:[.42,.20,.30,.08], gatsby:[.48,.16,.26,.10], nick:[.18,.38,.28,.16],
+      santiago:[.20,.42,.20,.18], winston:[.24,.28,.24,.24], john_savage:[.12,.28,.20,.40],
+      lenina:[.40,.20,.28,.12], meursault:[.10,.40,.12,.38], hermione:[.18,.34,.36,.12],
+      harry:[.28,.28,.30,.14], snape:[.34,.24,.18,.24], frodo:[.28,.34,.26,.12],
+      sam:[.46,.20,.28,.06], aragorn:[.22,.36,.30,.12], bilbo:[.18,.38,.30,.14],
+      paul:[.14,.32,.30,.24], montag:[.20,.34,.28,.18], charlie:[.32,.28,.26,.14]
+    }, confidence:.74
+  },
+  {
+    id:"snow_cabin", theme:"生存与牺牲", title:"雪山木屋",
+    story:`你和另外三个人被困在雪山木屋里。
+食物只够两个人撑到救援抵达。
+
+另外三个人是：一个重伤者、一个最有能力出门求援的人、一个十四岁的孩子。
+重伤者把自己的食物推到桌子中央，说：“别浪费在我身上。”`,
+    choices:[
+      "把更多食物留给孩子。",
+      "把更多食物给最有可能出去求救的人。",
+      "四个人仍然平均分。",
+      "接受伤者决定，把他的份额分给其他三个人。"
+    ],
+    p:{
+      jane_eyre:[.26,.28,.30,.16], elizabeth:[.22,.32,.30,.16], darcy:[.18,.40,.24,.18],
+      jean_valjean:[.42,.24,.26,.08], javert:[.14,.52,.18,.16], raskolnikov:[.16,.38,.20,.26],
+      sonya:[.48,.16,.30,.06], gatsby:[.28,.34,.20,.18], nick:[.20,.36,.28,.16],
+      santiago:[.24,.34,.24,.18], winston:[.20,.32,.26,.22], john_savage:[.26,.28,.24,.22],
+      lenina:[.34,.24,.28,.14], meursault:[.16,.30,.26,.28], hermione:[.22,.46,.24,.08],
+      harry:[.34,.30,.26,.10], snape:[.16,.48,.20,.16], frodo:[.36,.28,.26,.10],
+      sam:[.42,.24,.28,.06], aragorn:[.22,.48,.24,.06], bilbo:[.28,.34,.28,.10],
+      paul:[.12,.56,.20,.12], montag:[.24,.34,.28,.14], charlie:[.34,.26,.30,.10]
+    }, confidence:.70
+  },
+  {
+    id:"sealed_letter", theme:"秘密与责任", title:"不能拆开的信",
+    story:`一位你极其信任的人临死前交给你一封密封信。
+他说：“只有当你确定我做错了，才打开它。”
+
+多年后，你发现一些证据，似乎说明他曾经害过一个无辜的人。
+但证据并不完整。`,
+    choices:[
+      "马上拆开。真相比承诺重要。",
+      "继续调查，直到证据足够明确。",
+      "不拆。承诺就是承诺。",
+      "把信交给当年可能受害的人，让对方决定。"
+    ],
+    p:{
+      jane_eyre:[.18,.50,.20,.12], elizabeth:[.20,.54,.16,.10], darcy:[.14,.52,.24,.10],
+      jean_valjean:[.16,.48,.20,.16], javert:[.32,.46,.14,.08], raskolnikov:[.30,.40,.12,.18],
+      sonya:[.10,.42,.34,.14], gatsby:[.22,.40,.24,.14], nick:[.16,.56,.18,.10],
+      santiago:[.12,.48,.28,.12], winston:[.30,.44,.12,.14], john_savage:[.28,.38,.16,.18],
+      lenina:[.18,.34,.34,.14], meursault:[.28,.36,.18,.18], hermione:[.20,.62,.10,.08],
+      harry:[.30,.42,.16,.12], snape:[.08,.58,.26,.08], frodo:[.16,.48,.24,.12],
+      sam:[.10,.42,.38,.10], aragorn:[.14,.58,.18,.10], bilbo:[.18,.52,.20,.10],
+      paul:[.18,.64,.10,.08], montag:[.28,.46,.14,.12], charlie:[.18,.50,.20,.12]
+    }, confidence:.76
+  },
+  {
+    id:"public_lie", theme:"真相与关系", title:"宴会上的一句话",
+    story:`在一场公开宴会上，你的朋友为了保护自己的家人，说了一个谎。
+这个谎让另一个无辜的人受到了怀疑。
+
+只有你知道完整真相。
+主持人突然转向你：“你能证明他说的是真的吗？”`,
+    choices:[
+      "替朋友把谎圆下去。",
+      "拒绝回答，先把朋友带离现场。",
+      "当场说出真相。",
+      "说一半真相，先解除无辜者的嫌疑，再私下处理朋友的问题。"
+    ],
+    p:{
+      jane_eyre:[.08,.20,.34,.38], elizabeth:[.06,.18,.30,.46], darcy:[.10,.24,.28,.38],
+      jean_valjean:[.14,.26,.24,.36], javert:[.02,.08,.78,.12], raskolnikov:[.20,.22,.26,.32],
+      sonya:[.18,.32,.18,.32], gatsby:[.24,.22,.18,.36], nick:[.08,.22,.30,.40],
+      santiago:[.10,.24,.30,.36], winston:[.16,.22,.24,.38], john_savage:[.10,.14,.50,.26],
+      lenina:[.18,.28,.24,.30], meursault:[.06,.18,.54,.22], hermione:[.06,.18,.28,.48],
+      harry:[.18,.22,.26,.34], snape:[.16,.26,.18,.40], frodo:[.16,.26,.22,.36],
+      sam:[.24,.28,.16,.32], aragorn:[.10,.24,.24,.42], bilbo:[.10,.24,.28,.38],
+      paul:[.08,.18,.28,.46], montag:[.12,.22,.30,.36], charlie:[.12,.28,.26,.34]
+    }, confidence:.78
+  },
+  {
+    id:"burned_map", theme:"未知与控制", title:"只剩半张地图",
+    story:`你在荒原里找到一张通往失落城市的地图，但地图被烧掉一半。
+同行者中有人坚持继续前进，因为传说那里有能改变命运的东西；
+另一人要求原路返回。
+
+天黑前必须决定。`,
+    choices:[
+      "继续。地图不完整也比什么都没有强。",
+      "返回。未知收益不值得赌命。",
+      "先在附近寻找地形证据，验证地图残片。",
+      "分组：一部分留下，一小部分继续侦察。"
+    ],
+    p:{
+      jane_eyre:[.18,.22,.44,.16], elizabeth:[.22,.18,.46,.14], darcy:[.12,.24,.50,.14],
+      jean_valjean:[.16,.28,.40,.16], javert:[.06,.44,.42,.08], raskolnikov:[.36,.12,.32,.20],
+      sonya:[.12,.34,.38,.16], gatsby:[.52,.08,.24,.16], nick:[.12,.28,.48,.12],
+      santiago:[.30,.12,.44,.14], winston:[.34,.12,.34,.20], john_savage:[.46,.10,.28,.16],
+      lenina:[.12,.42,.34,.12], meursault:[.24,.24,.34,.18], hermione:[.14,.12,.62,.12],
+      harry:[.44,.10,.34,.12], snape:[.12,.20,.52,.16], frodo:[.28,.18,.40,.14],
+      sam:[.18,.30,.38,.14], aragorn:[.20,.14,.52,.14], bilbo:[.34,.14,.40,.12],
+      paul:[.16,.10,.60,.14], montag:[.36,.14,.34,.16], charlie:[.20,.24,.42,.14]
+    }, confidence:.74
+  },
+  {
+    id:"throne_offer", theme:"权力与责任", title:"空着的王座",
+    story:`一个长期混乱的地区终于推翻了暴君。
+人们推举你成为临时领导者，因为你是少数被各方信任的人。
+
+你原本只想离开这里。
+如果拒绝，很可能再次陷入权力争夺。`,
+    choices:[
+      "接受，并尽快建立稳定秩序。",
+      "拒绝。不能因为局势需要就把人生交出去。",
+      "暂时接受，但明确设定交权时间。",
+      "寻找比自己更合适的人，并帮助他获得支持。"
+    ],
+    p:{
+      jane_eyre:[.16,.34,.32,.18], elizabeth:[.14,.28,.34,.24], darcy:[.28,.16,.34,.22],
+      jean_valjean:[.24,.12,.30,.34], javert:[.48,.08,.30,.14], raskolnikov:[.36,.18,.28,.18],
+      sonya:[.10,.24,.24,.42], gatsby:[.34,.22,.26,.18], nick:[.10,.34,.28,.28],
+      santiago:[.14,.30,.28,.28], winston:[.18,.30,.30,.22], john_savage:[.26,.30,.26,.18],
+      lenina:[.12,.40,.28,.20], meursault:[.08,.58,.20,.14], hermione:[.28,.12,.42,.18],
+      harry:[.30,.18,.34,.18], snape:[.22,.22,.38,.18], frodo:[.18,.24,.34,.24],
+      sam:[.12,.20,.26,.42], aragorn:[.48,.06,.28,.18], bilbo:[.12,.40,.28,.20],
+      paul:[.52,.06,.30,.12], montag:[.18,.28,.34,.20], charlie:[.10,.42,.28,.20]
+    }, confidence:.79
+  },
+  {
+    id:"forbidden_book", theme:"知识与安全", title:"被禁止的书",
+    story:`你在学校旧仓库里发现一本被严禁阅读的书。
+据说有人仅仅因为保存它就被开除。
+
+你翻开第一页，发现里面记载的历史与课堂上学到的完全不同。`,
+    choices:[
+      "继续读完，并想办法保存副本。",
+      "先确认作者和内容是否可信。",
+      "立刻放回去，不值得冒险。",
+      "找几个可信的人一起研究，避免自己判断失真。"
+    ],
+    p:{
+      jane_eyre:[.28,.36,.10,.26], elizabeth:[.24,.38,.08,.30], darcy:[.16,.44,.14,.26],
+      jean_valjean:[.20,.38,.16,.26], javert:[.04,.26,.58,.12], raskolnikov:[.42,.30,.08,.20],
+      sonya:[.14,.34,.24,.28], gatsby:[.34,.30,.14,.22], nick:[.18,.44,.14,.24],
+      santiago:[.20,.38,.18,.24], winston:[.50,.24,.06,.20], john_savage:[.52,.22,.08,.18],
+      lenina:[.10,.28,.44,.18], meursault:[.22,.38,.24,.16], hermione:[.28,.46,.06,.20],
+      harry:[.42,.26,.08,.24], snape:[.18,.52,.08,.22], frodo:[.28,.34,.14,.24],
+      sam:[.18,.30,.26,.26], aragorn:[.22,.42,.10,.26], bilbo:[.26,.38,.14,.22],
+      paul:[.20,.50,.08,.22], montag:[.54,.22,.06,.18], charlie:[.28,.38,.12,.22]
+    }, confidence:.88
+  },
+  {
+    id:"bridge_choice", theme:"责任与人数", title:"桥上的两边",
+    story:`洪水冲断了主桥，只剩一条临时索桥还能使用一次。
+河这边有五个陌生人，河对岸有一个你非常重要的人。
+
+你只能选择让一边的人通过，之后桥就会断。`,
+    choices:[
+      "救五个陌生人。",
+      "救那个对自己最重要的人。",
+      "尝试让最轻的人先过，也许桥能撑得更久。",
+      "把决定交给两边的人共同表决。"
+    ],
+    p:{
+      jane_eyre:[.26,.30,.34,.10], elizabeth:[.28,.24,.38,.10], darcy:[.24,.34,.34,.08],
+      jean_valjean:[.44,.18,.32,.06], javert:[.52,.14,.28,.06], raskolnikov:[.28,.30,.30,.12],
+      sonya:[.40,.26,.28,.06], gatsby:[.18,.52,.24,.06], nick:[.34,.20,.36,.10],
+      santiago:[.30,.28,.34,.08], winston:[.26,.28,.34,.12], john_savage:[.24,.36,.30,.10],
+      lenina:[.24,.38,.28,.10], meursault:[.28,.24,.32,.16], hermione:[.28,.24,.42,.06],
+      harry:[.20,.44,.30,.06], snape:[.12,.62,.22,.04], frodo:[.28,.34,.32,.06],
+      sam:[.18,.56,.22,.04], aragorn:[.38,.22,.36,.04], bilbo:[.30,.26,.36,.08],
+      paul:[.42,.16,.38,.04], montag:[.28,.28,.36,.08], charlie:[.30,.30,.32,.08]
+    }, confidence:.68
+  },
+  {
+    id:"enemy_wounded", theme:"敌人与仁慈", title:"倒在路边的敌人",
+    story:`你在逃亡途中发现一个曾多次追捕你的人受了重伤。
+他没有武器，也认出了你。
+
+如果你留下救他，追兵可能赶上；
+如果你离开，他大概活不过今晚。`,
+    choices:[
+      "留下救他。",
+      "只做最基本的处理，然后立即离开。",
+      "完全不管，继续逃。",
+      "先问他一个你一直想知道的真相，再决定。"
+    ],
+    p:{
+      jane_eyre:[.32,.42,.08,.18], elizabeth:[.28,.46,.08,.18], darcy:[.34,.42,.06,.18],
+      jean_valjean:[.62,.28,.02,.08], javert:[.18,.46,.18,.18], raskolnikov:[.20,.34,.22,.24],
+      sonya:[.68,.24,.02,.06], gatsby:[.30,.34,.14,.22], nick:[.26,.48,.10,.16],
+      santiago:[.36,.42,.08,.14], winston:[.24,.36,.16,.24], john_savage:[.30,.32,.14,.24],
+      lenina:[.24,.42,.18,.16], meursault:[.18,.38,.28,.16], hermione:[.34,.46,.06,.14],
+      harry:[.42,.36,.06,.16], snape:[.18,.38,.18,.26], frodo:[.48,.36,.04,.12],
+      sam:[.58,.32,.02,.08], aragorn:[.44,.40,.04,.12], bilbo:[.38,.42,.06,.14],
+      paul:[.24,.42,.12,.22], montag:[.32,.40,.10,.18], charlie:[.42,.38,.06,.14]
+    }, confidence:.80
+  },
+  {
+    id:"memory_machine", theme:"记忆与幸福", title:"删除一段记忆",
+    story:`一种机器可以永久删除一段痛苦记忆。
+删除后，你不会失去其他知识，也不会知道自己曾删除过什么。
+
+医生告诉你：这段记忆确实一直影响着你，但它也塑造了现在的你。`,
+    choices:[
+      "删除。痛苦没有必要被神圣化。",
+      "不删除。那也是自己的一部分。",
+      "暂时不决定，先看看有没有降低痛苦但保留记忆的办法。",
+      "先把这段经历完整写下来，再删除。"
+    ],
+    p:{
+      jane_eyre:[.08,.54,.30,.08], elizabeth:[.10,.50,.32,.08], darcy:[.08,.58,.28,.06],
+      jean_valjean:[.06,.62,.24,.08], javert:[.18,.40,.34,.08], raskolnikov:[.12,.56,.22,.10],
+      sonya:[.06,.66,.22,.06], gatsby:[.08,.62,.20,.10], nick:[.10,.48,.34,.08],
+      santiago:[.06,.66,.22,.06], winston:[.06,.72,.16,.06], john_savage:[.04,.72,.18,.06],
+      lenina:[.36,.28,.28,.08], meursault:[.24,.42,.28,.06], hermione:[.08,.46,.40,.06],
+      harry:[.08,.58,.26,.08], snape:[.04,.76,.14,.06], frodo:[.08,.58,.28,.06],
+      sam:[.08,.58,.28,.06], aragorn:[.06,.64,.24,.06], bilbo:[.12,.50,.30,.08],
+      paul:[.10,.46,.38,.06], montag:[.08,.58,.28,.06], charlie:[.10,.54,.28,.08]
+    }, confidence:.71
+  },
+  {
+    id:"false_victory", theme:"荣誉与真相", title:"本不属于你的胜利",
+    story:`你参加了一场重要比赛并最终获胜。
+庆祝结束后，你发现裁判漏判了对手一次有效得分。
+如果按正确结果，你应该输。
+
+除了你，没有任何人发现这个错误。`,
+    choices:[
+      "主动公开错误，把胜利还给对手。",
+      "私下联系对手，由他决定是否公开。",
+      "不说。裁判错误也是比赛的一部分。",
+      "保留结果，但把奖金或实际利益让给对手。"
+    ],
+    p:{
+      jane_eyre:[.48,.26,.08,.18], elizabeth:[.44,.30,.08,.18], darcy:[.50,.26,.06,.18],
+      jean_valjean:[.58,.24,.04,.14], javert:[.66,.18,.10,.06], raskolnikov:[.24,.24,.28,.24],
+      sonya:[.60,.24,.03,.13], gatsby:[.22,.26,.30,.22], nick:[.40,.34,.10,.16],
+      santiago:[.54,.24,.06,.16], winston:[.42,.28,.12,.18], john_savage:[.54,.20,.08,.18],
+      lenina:[.24,.28,.30,.18], meursault:[.28,.28,.28,.16], hermione:[.56,.28,.04,.12],
+      harry:[.44,.30,.08,.18], snape:[.34,.28,.18,.20], frodo:[.50,.28,.06,.16],
+      sam:[.54,.28,.04,.14], aragorn:[.58,.24,.04,.14], bilbo:[.42,.34,.08,.16],
+      paul:[.46,.28,.10,.16], montag:[.48,.28,.08,.16], charlie:[.46,.30,.08,.16]
+    }, confidence:.73
+  },
+  {
+    id:"unknown_child", theme:"责任与陌生人", title:"车站里的孩子",
+    story:`最后一班火车即将开走。
+一个独自哭泣的孩子抓住你的衣角，说自己找不到家人。
+
+如果你错过这班车，你会失去一个非常重要、无法延期的机会。
+车门已经开始关闭。`,
+    choices:[
+      "留下陪孩子，放弃火车。",
+      "把孩子交给站务人员，自己上车。",
+      "带孩子一起上车，再想办法联系家人。",
+      "先上车，同时报警并持续跟进。"
+    ],
+    p:{
+      jane_eyre:[.34,.34,.20,.12], elizabeth:[.30,.38,.20,.12], darcy:[.28,.42,.18,.12],
+      jean_valjean:[.56,.28,.10,.06], javert:[.18,.56,.14,.12], raskolnikov:[.20,.36,.24,.20],
+      sonya:[.62,.24,.08,.06], gatsby:[.28,.34,.24,.14], nick:[.26,.42,.20,.12],
+      santiago:[.36,.36,.18,.10], winston:[.28,.34,.22,.16], john_savage:[.34,.30,.22,.14],
+      lenina:[.24,.46,.20,.10], meursault:[.16,.46,.20,.18], hermione:[.28,.42,.22,.08],
+      harry:[.38,.34,.20,.08], snape:[.20,.46,.18,.16], frodo:[.40,.34,.18,.08],
+      sam:[.54,.28,.12,.06], aragorn:[.36,.40,.18,.06], bilbo:[.34,.38,.18,.10],
+      paul:[.22,.46,.20,.12], montag:[.30,.38,.20,.12], charlie:[.42,.32,.18,.08]
+    }, confidence:.66
+  },
+  {
+    id:"perfect_city", theme:"幸福与真实", title:"没有痛苦的城市",
+    story:`你来到一座几乎没有犯罪、贫困和孤独的城市。
+每个人都很满足。
+
+后来你发现，这种稳定依赖一种药：它会轻微削弱人的强烈悲伤，也会削弱强烈爱意、愤怒和野心。
+居民可以自愿停药，但几乎没人这么做。`,
+    choices:[
+      "留下并继续用药。稳定的幸福很珍贵。",
+      "留下，但拒绝用药。",
+      "离开。即使痛苦，也更想保留完整情感。",
+      "先研究药物与制度，再决定是否留下。"
+    ],
+    p:{
+      jane_eyre:[.04,.30,.44,.22], elizabeth:[.06,.30,.36,.28], darcy:[.06,.34,.34,.26],
+      jean_valjean:[.06,.28,.40,.26], javert:[.24,.30,.18,.28], raskolnikov:[.04,.22,.48,.26],
+      sonya:[.08,.34,.36,.22], gatsby:[.10,.22,.42,.26], nick:[.08,.30,.30,.32],
+      santiago:[.04,.28,.46,.22], winston:[.02,.18,.58,.22], john_savage:[.01,.14,.72,.13],
+      lenina:[.48,.26,.08,.18], meursault:[.18,.30,.24,.28], hermione:[.06,.28,.34,.32],
+      harry:[.04,.24,.48,.24], snape:[.02,.26,.46,.26], frodo:[.08,.32,.34,.26],
+      sam:[.12,.38,.28,.22], aragorn:[.06,.34,.34,.26], bilbo:[.12,.34,.28,.26],
+      paul:[.04,.22,.40,.34], montag:[.02,.20,.56,.22], charlie:[.08,.28,.38,.26]
+    }, confidence:.88
+  },
+  {
+    id:"leader_wrong", theme:"忠诚与原则", title:"你敬重的人错了",
+    story:`你所在的小队一直由一个你非常敬重的人带领。
+这一次，他下达了一个命令。
+
+你很确定，这个命令虽然合法，却会让一群无辜者承担不必要的损失。
+其他人都在等你表态。`,
+    choices:[
+      "公开反对命令。",
+      "私下劝他撤回命令。",
+      "先执行，再寻找补救办法。",
+      "拒绝执行，但不公开挑战他的权威。"
+    ],
+    p:{
+      jane_eyre:[.34,.28,.10,.28], elizabeth:[.30,.36,.08,.26], darcy:[.18,.44,.12,.26],
+      jean_valjean:[.26,.38,.10,.26], javert:[.08,.16,.64,.12], raskolnikov:[.38,.20,.12,.30],
+      sonya:[.20,.48,.12,.20], gatsby:[.26,.28,.18,.28], nick:[.16,.44,.16,.24],
+      santiago:[.22,.38,.12,.28], winston:[.30,.24,.10,.36], john_savage:[.46,.20,.08,.26],
+      lenina:[.10,.30,.42,.18], meursault:[.18,.26,.24,.32], hermione:[.30,.44,.08,.18],
+      harry:[.44,.26,.08,.22], snape:[.08,.34,.10,.48], frodo:[.28,.38,.10,.24],
+      sam:[.18,.48,.12,.22], aragorn:[.24,.48,.08,.20], bilbo:[.20,.40,.14,.26],
+      paul:[.20,.44,.10,.26], montag:[.36,.28,.10,.26], charlie:[.22,.42,.12,.24]
+    }, confidence:.82
+  },
+  {
+    id:"future_vision", theme:"命运与自由", title:"已经看见的未来",
+    story:`你获得一次看见未来的机会。
+你看到：如果按照现在的生活继续下去，十年后你会非常成功，
+但会和现在最重要的一个人彻底失去联系。
+
+画面结束后，对方什么都不知道。`,
+    choices:[
+      "马上改变自己的道路。",
+      "不改变。未来并不是确定的。",
+      "告诉对方自己看到的未来，一起决定。",
+      "不说，但开始悄悄调整生活，让两种结果都尽量保住。"
+    ],
+    p:{
+      jane_eyre:[.20,.22,.34,.24], elizabeth:[.18,.24,.34,.24], darcy:[.16,.20,.34,.30],
+      jean_valjean:[.24,.18,.34,.24], javert:[.12,.36,.22,.30], raskolnikov:[.28,.26,.22,.24],
+      sonya:[.28,.16,.40,.16], gatsby:[.34,.22,.26,.18], nick:[.14,.28,.30,.28],
+      santiago:[.16,.30,.28,.26], winston:[.22,.26,.26,.26], john_savage:[.28,.24,.26,.22],
+      lenina:[.20,.30,.30,.20], meursault:[.12,.44,.22,.22], hermione:[.18,.20,.38,.24],
+      harry:[.24,.22,.34,.20], snape:[.12,.20,.22,.46], frodo:[.24,.18,.38,.20],
+      sam:[.28,.16,.40,.16], aragorn:[.18,.22,.34,.26], bilbo:[.16,.32,.30,.22],
+      paul:[.14,.18,.30,.38], montag:[.24,.24,.28,.24], charlie:[.24,.24,.34,.18]
+    }, confidence:.67
+  },
+  {
+    id:"stranger_door", theme:"陌生人与风险", title:"凌晨三点的陌生人",
+    story:`凌晨三点，有人疯狂敲门。
+门外是一个你从未见过的人，浑身湿透，手臂受伤。
+
+他说：“请让我进去五分钟。有人在追我。”
+远处已经能听见汽车声。`,
+    choices:[
+      "立刻让他进来。",
+      "不开门，隔着门先问清楚发生了什么。",
+      "报警，同时让他躲到门廊暗处。",
+      "不开门，也不介入。"
+    ],
+    p:{
+      jane_eyre:[.24,.42,.24,.10], elizabeth:[.20,.46,.24,.10], darcy:[.18,.48,.24,.10],
+      jean_valjean:[.52,.30,.14,.04], javert:[.06,.46,.36,.12], raskolnikov:[.26,.34,.24,.16],
+      sonya:[.56,.28,.12,.04], gatsby:[.32,.34,.22,.12], nick:[.16,.48,.26,.10],
+      santiago:[.28,.40,.24,.08], winston:[.24,.34,.28,.14], john_savage:[.34,.34,.20,.12],
+      lenina:[.14,.44,.28,.14], meursault:[.12,.40,.26,.22], hermione:[.18,.44,.30,.08],
+      harry:[.36,.32,.24,.08], snape:[.12,.42,.28,.18], frodo:[.34,.36,.22,.08],
+      sam:[.48,.32,.16,.04], aragorn:[.34,.38,.22,.06], bilbo:[.30,.40,.22,.08],
+      paul:[.14,.44,.30,.12], montag:[.30,.36,.24,.10], charlie:[.34,.38,.20,.08]
+    }, confidence:.69
+  },
+  {
+    id:"last_message", theme:"爱与真相", title:"最后一条消息",
+    story:`你收到一条延迟发送的消息。
+发件人已经去世。
+
+消息里说，他生前一直隐瞒了一件与你有关的重要真相。
+你可以继续往下读取，也可以永久删除；一旦打开，你们过去的很多美好记忆可能会改变意义。`,
+    choices:[
+      "继续读完。真实比记忆完整更重要。",
+      "删除。过去已经结束。",
+      "先保存，但等自己准备好再读。",
+      "把消息交给一个共同信任的人，请他先判断是否值得知道。"
+    ],
+    p:{
+      jane_eyre:[.34,.10,.42,.14], elizabeth:[.36,.08,.40,.16], darcy:[.28,.12,.42,.18],
+      jean_valjean:[.28,.14,.40,.18], javert:[.50,.08,.30,.12], raskolnikov:[.42,.08,.36,.14],
+      sonya:[.24,.18,.42,.16], gatsby:[.30,.18,.38,.14], nick:[.32,.10,.42,.16],
+      santiago:[.28,.14,.42,.16], winston:[.46,.06,.36,.12], john_savage:[.48,.06,.34,.12],
+      lenina:[.22,.24,.38,.16], meursault:[.28,.24,.34,.14], hermione:[.40,.06,.40,.14],
+      harry:[.40,.08,.38,.14], snape:[.24,.10,.52,.14], frodo:[.34,.10,.40,.16],
+      sam:[.26,.16,.42,.16], aragorn:[.32,.10,.42,.16], bilbo:[.30,.12,.42,.16],
+      paul:[.40,.06,.40,.14], montag:[.44,.08,.36,.12], charlie:[.36,.10,.40,.14]
+    }, confidence:.72
+  }
+];
+
+
+
+const TOTAL_STEPS = 14;
+const MIN_STEPS_BEFORE_STOP = 11;
+const SOFT_FLOOR = 0.015;
+
+let state = null;
+
+const $ = s => document.querySelector(s);
+const startPanel = $("#start"), quizPanel = $("#quiz"), resultPanel = $("#result");
+
+function normalize(obj){
+  let sum = Object.values(obj).reduce((a,b)=>a+b,0);
+  if(!sum) sum = 1;
+  for(const k in obj) obj[k] /= sum;
+  return obj;
+}
+
+function entropy(probs){
+  let h = 0;
+  for(const p of probs){
+    if(p > 0) h -= p * Math.log2(p);
+  }
+  return h;
+}
+
+function softmax(items, temp){
+  const max = Math.max(...items.map(x=>x.score));
+  const arr = items.map(x=>({ ...x, w:Math.exp((x.score-max)/Math.max(temp,0.05)) }));
+  const z = arr.reduce((s,x)=>s+x.w,0);
+  return arr.map(x=>({ ...x, prob:x.w/z }));
+}
+
+function weightedPick(items){
+  let r = Math.random(), acc = 0;
+  for(const item of items){
+    acc += item.prob;
+    if(r <= acc) return item;
+  }
+  return items[items.length-1];
+}
+
+function topCharacters(n=8){
+  return Object.entries(state.posterior)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,n)
+    .map(([id,p])=>({c:CHARACTERS.find(x=>x.id===id), p}));
+}
+
+function getLikelihood(q, charId, answerIndex){
+  const arr = q.p[charId] || [0.25,0.25,0.25,0.25];
+  const raw = arr[answerIndex] ?? 0.25;
+  // 置信度低时向均匀分布回缩，避免过度确信
+  const conf = q.confidence ?? 0.7;
+  return 0.25*(1-conf) + raw*conf;
+}
+
+function predictiveAnswerDist(q, posterior){
+  const dist = [0,0,0,0];
+  for(const [id,p] of Object.entries(posterior)){
+    const arr = q.p[id] || [0.25,0.25,0.25,0.25];
+    const conf = q.confidence ?? 0.7;
+    for(let a=0;a<4;a++) dist[a] += p * (0.25*(1-conf)+arr[a]*conf);
+  }
+  const s = dist.reduce((x,y)=>x+y,0)||1;
+  return dist.map(x=>x/s);
+}
+
+function expectedPosteriorEntropy(q){
+  const pred = predictiveAnswerDist(q, state.posterior);
+  let expected = 0;
+
+  for(let a=0;a<4;a++){
+    const next = {};
+    for(const [id,p] of Object.entries(state.posterior)){
+      next[id] = p * Math.max(SOFT_FLOOR, getLikelihood(q,id,a));
+    }
+    normalize(next);
+    expected += pred[a] * entropy(Object.values(next));
+  }
+  return expected;
+}
+
+function currentEntropy(){
+  return entropy(Object.values(state.posterior));
+}
+
+function leaderChallengeScore(q){
+  const top = topCharacters(5);
+  if(top.length < 2) return 0;
+
+  const leader = top[0];
+  const rest = top.slice(1);
+  const lp = q.p[leader.c.id] || [0.25,0.25,0.25,0.25];
+
+  let diff = 0;
+  for(const r of rest){
+    const rp = q.p[r.c.id] || [0.25,0.25,0.25,0.25];
+    diff += r.p * rp.reduce((s,v,i)=>s+Math.abs(v-lp[i]),0)/2;
+  }
+  return diff;
+}
+
+function themeNovelty(q){
+  if(!state.history.length) return 1;
+  const lastThemes = state.history.slice(-3).map(x=>x.theme);
+  let penalty = 0;
+  if(lastThemes.at(-1) === q.theme) penalty += 0.75;
+  if(lastThemes.includes(q.theme)) penalty += 0.25;
+  return Math.max(0, 1-penalty);
+}
+
+function temperature(){
+  // 前期更随机，后期逐渐收敛
+  const t = state.history.length / TOTAL_STEPS;
+  return 0.62 - 0.40*t; // 0.62 -> 0.22
+}
+
+function chooseNextQuestion(){
+  const unused = QUESTIONS.filter(q=>!state.used.has(q.id));
+  const H0 = currentEntropy();
+  const leader = topCharacters(1)[0]?.p || 0;
+
+  let scored = unused.map(q=>{
+    const infoGain = Math.max(0, H0 - expectedPosteriorEntropy(q));
+    const novelty = themeNovelty(q);
+    const challenge = leaderChallengeScore(q);
+    const confidence = q.confidence ?? 0.7;
+
+    // 当某人明显领先时，主动提高“反转题”权重
+    const reversalWeight = leader > 0.23 ? 0.34 : leader > 0.16 ? 0.18 : 0.06;
+
+    // 不是只数学最优：信息增益 + 新鲜度 + 反转 + 证据置信度 + 小噪声
+    const score =
+      1.00*infoGain +
+      0.20*novelty +
+      reversalWeight*challenge +
+      0.12*confidence +
+      (Math.random()-0.5)*0.035;
+
+    return {q,score,infoGain,novelty,challenge,confidence};
+  });
+
+  scored.sort((a,b)=>b.score-a.score);
+
+  // 只在前若干个“合理候选”中随机抽，既防纯随机，也避免每次固定
+  const poolSize = Math.min(7, scored.length);
+  const pool = scored.slice(0,poolSize);
+  const probs = softmax(pool, temperature());
+  const picked = weightedPick(probs);
+
+  state.lastSelectionMeta = {
+    temperature: temperature(),
+    leader,
+    candidates: probs.map(x=>({
+      id:x.q.id, title:x.q.title, score:x.score, prob:x.prob,
+      infoGain:x.infoGain, novelty:x.novelty, challenge:x.challenge
+    }))
+  };
+  return picked.q;
+}
+
+function updatePosterior(q, answerIndex){
+  const before = {...state.posterior};
+  const next = {};
+  for(const [id,p] of Object.entries(state.posterior)){
+    next[id] = p * Math.max(SOFT_FLOOR, getLikelihood(q,id,answerIndex));
+  }
+  normalize(next);
+  state.posterior = next;
+
+  const movers = Object.keys(next).map(id=>({
+    c:CHARACTERS.find(x=>x.id===id),
+    before:before[id], after:next[id], delta:next[id]-before[id]
+  })).sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
+
+  return movers;
+}
+
+function shouldFinish(){
+  if(state.history.length >= TOTAL_STEPS) return true;
+  if(state.history.length < MIN_STEPS_BEFORE_STOP) return false;
+
+  const top = topCharacters(3);
+  if(top.length < 2) return false;
+
+  // 足够明显时可以提前结束，但不会早于 11 题
+  return top[0].p > 0.34 && (top[0].p - top[1].p) > 0.11;
+}
+
+function renderQuestion(q){
+  state.current = q;
+  state.used.add(q.id);
+
+  $("#stepText").textContent = `第 ${state.history.length+1} 题 · ${q.theme}`;
+  $("#questionTitle").textContent = q.title;
+  $("#storyText").textContent = q.story;
+  $("#progressBar").style.width = `${Math.min(100, state.history.length/TOTAL_STEPS*100)}%`;
+
+  const choices = $("#choices");
+  choices.innerHTML = "";
+  q.choices.forEach((text,i)=>{
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = `<b>${String.fromCharCode(65+i)}.</b>${text}`;
+    b.onclick = ()=>answer(i);
+    choices.appendChild(b);
+  });
+
+  $("#movement").classList.add("hidden");
+  renderDebug();
+}
+
+function renderDebug(){
+  const meta = state.lastSelectionMeta;
+  if(!meta){
+    $("#debugText").innerHTML = "第一题从高覆盖率情境中随机选择。";
+    return;
+  }
+  const lines = meta.candidates.slice(0,5).map((x,i)=>
+    `${i+1}. ${x.title}：下一题概率 ${(x.prob*100).toFixed(0)}% ｜ 信息增益 ${x.infoGain.toFixed(3)} ｜ 反转值 ${x.challenge.toFixed(3)}`
+  );
+  $("#debugText").innerHTML =
+    `<p>当前温度：<code>${meta.temperature.toFixed(2)}</code>。温度越高，同等优秀的问题越可能随机出现。</p>
+     <p>${lines.join("<br>")}</p>`;
+}
+
+function answer(index){
+  const q = state.current;
+  const movers = updatePosterior(q,index);
+
+  state.history.push({
+    qid:q.id, title:q.title, theme:q.theme, answer:index,
+    choice:q.choices[index]
+  });
+
+  const topUp = movers.filter(x=>x.delta>0).slice(0,3);
+  const topDown = movers.filter(x=>x.delta<0).slice(0,2);
+
+  const movement = $("#movement");
+  movement.innerHTML =
+    `你的这次选择让故事明显靠近：<strong>${topUp.map(x=>x.c.name).join("、")}</strong>` +
+    (topDown.length ? `；同时远离：${topDown.map(x=>x.c.name).join("、")}。` : "。") +
+    `<br><span class="small">这些人物并未被永久淘汰；后续选择仍可能发生反转。</span>`;
+  movement.classList.remove("hidden");
+
+  for(const b of document.querySelectorAll(".choice")) b.disabled = true;
+
+  setTimeout(()=>{
+    if(shouldFinish()) showResult();
+    else renderQuestion(chooseNextQuestion());
+  }, 720);
+}
+
+function userNarrativeProfile(){
+  // 用后验分布加权人物关系特征，不把它展示成 MBTI/心理量表。
+  const keys = ["warm","steady","intense","playful","dominant","loyal"];
+  const prof = Object.fromEntries(keys.map(k=>[k,0]));
+  for(const [id,p] of Object.entries(state.posterior)){
+    const c = CHARACTERS.find(x=>x.id===id);
+    keys.forEach(k=>prof[k]+=p*c.relation[k]);
+  }
+  return prof;
+}
+
+function similarity(a,b){
+  const keys = Object.keys(a);
+  let d=0;
+  keys.forEach(k=>d += (a[k]-b[k])**2);
+  return 1-Math.sqrt(d/keys.length);
+}
+
+function companionScores(mode){
+  const u = userNarrativeProfile();
+
+  return CHARACTERS.map(c=>{
+    const r = c.relation;
+    let score=0;
+
+    if(mode==="friend"){
+      // 朋友：温暖、稳定、忠诚优先；允许一定互补
+      score = .30*r.warm + .28*r.steady + .30*r.loyal + .12*(1-Math.abs(r.playful-u.playful));
+    }else if(mode==="lover"){
+      // 恋人：不是单纯最相似，强调稳定+忠诚+适度强烈感
+      score = .23*r.warm + .24*r.steady + .24*r.loyal + .18*(1-Math.abs(r.intense-(.7*u.intense+.2))) + .11*similarity(u,r);
+    }else{
+      // 对手：价值/行事风格差异 + 主导性
+      score = .58*(1-similarity(u,r)) + .42*r.dominant;
+    }
+
+    // 避免“最像你的人”机械霸占所有关系结果
+    score -= 0.10*(state.posterior[c.id]||0);
+    return {c,score};
+  }).sort((a,b)=>b.score-a.score);
+}
+
+function renderRelation(el, item, text){
+  el.innerHTML = `<div class="name">${item.c.name}</div>
+                  <p>${item.c.book}</p>
+                  <p>${text}</p>`;
+}
+
+function showResult(){
+  quizPanel.classList.add("hidden");
+  resultPanel.classList.remove("hidden");
+
+  const top = topCharacters(5);
+  const winner = top[0];
+
+  $("#topResult").innerHTML =
+    `<div class="name">${winner.c.name}</div>
+     <div class="book">${winner.c.book}</div>
+     <div class="why">${winner.c.note}</div>
+     <div style="margin-top:18px">
+       ${top.map((x,i)=>`<div class="rank-row"><span>${i+1}. ${x.c.name}</span><strong>${(x.p*100).toFixed(1)}%</strong></div>`).join("")}
+     </div>`;
+
+  const friend = companionScores("friend")[0];
+  const lover = companionScores("lover")[0];
+  const rival = companionScores("rival")[0];
+
+  renderRelation($("#friendResult"),friend,"更偏向稳定、忠诚与长期陪伴，而不是单纯“和你最像”。");
+  renderRelation($("#loverResult"),lover,"强调吸引与长期相处的平衡，因此可能和“最像你”完全不同。");
+  renderRelation($("#rivalResult"),rival,"不是坏人，而是最可能在做事方式或价值排序上与你发生强烈冲突。");
+
+  const themes = [...new Set(state.history.map(x=>x.theme))];
+  $("#pathSummary").textContent =
+    `你一共经历了 ${state.history.length} 个情境，覆盖了 ${themes.length} 类冲突：${themes.join("、")}。` +
+    ` 每一步的下一题都从多个高价值候选题中按概率抽取，所以再次测试时，即使前几题答案相同，也不保证走到同一条题路。`;
+}
+
+function init(){
+  const posterior = {};
+  CHARACTERS.forEach(c=>posterior[c.id]=1/CHARACTERS.length);
+  state = {
+    posterior,
+    history:[],
+    used:new Set(),
+    current:null,
+    lastSelectionMeta:null
+  };
+}
+
+function begin(){
+  init();
+  startPanel.classList.add("hidden");
+  resultPanel.classList.add("hidden");
+  quizPanel.classList.remove("hidden");
+
+  // 第一题也不固定：从几个覆盖面大的入口题随机
+  const starters = ["forbidden_city","ship_fog","stranger_door","forbidden_book","dream_departure"]
+    .map(id=>QUESTIONS.find(q=>q.id===id));
+  const q = starters[Math.floor(Math.random()*starters.length)];
+  state.used.add(q.id);
+  renderQuestion(q);
+}
+
+$("#startBtn").onclick = begin;
+$("#restartBtn").onclick = ()=>{
+  resultPanel.classList.add("hidden");
+  startPanel.classList.remove("hidden");
+};
+
+  </script>
+</body>
+</html>
