@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>如果你活在小说里，你会是谁？</title><style>
 :root{--bg:#0f1117;--panel:#171a22;--panel2:#202531;--text:#f3f4f6;--muted:#a9b0bf;--line:#303747;--accent:#e4c07a}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top left,#252b3a 0,transparent 38%),radial-gradient(circle at bottom right,#211b25 0,transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.wrap{max-width:960px;margin:auto;padding:28px 18px 60px}.panel{background:rgba(23,26,34,.96);border:1px solid var(--line);border-radius:24px;padding:28px}.hidden{display:none!important}.hero{text-align:center;margin-top:6vh}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--accent);font-weight:800}h1{font-size:clamp(36px,7vw,64px);margin:14px 0}.lead{color:var(--muted);font-size:18px;line-height:1.8;max-width:720px;margin:0 auto 22px}.primary,.next{border:0;border-radius:999px;padding:13px 22px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#17120d}.next{background:#2b3240;color:var(--text);border:1px solid var(--line);margin-top:16px}.story{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0;white-space:pre-line;line-height:1.9;font-size:18px}.choices{display:grid;gap:12px}.choice{padding:16px;text-align:left;background:#181c25;color:var(--text);border:1px solid var(--line);border-radius:14px;cursor:pointer;line-height:1.6;transition:.15s}.choice:hover{border-color:#606a80;transform:translateY(-1px)}.choice.selected{border-color:var(--accent);background:#242a35}.choice b{color:var(--accent);margin-right:8px}.choice:disabled{cursor:default}.small,.muted{color:var(--muted);font-size:13px}.progress{height:8px;background:#2a303c;border-radius:999px;overflow:hidden;margin:14px 0}.progress span{display:block;height:100%;background:var(--accent);transition:.25s}.big{font-size:40px;font-weight:900;margin-top:14px}.second{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.why,.storyResult{margin:18px 0;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px}.why p,.storyResult p{line-height:1.85;color:#d9dde6}.evidence,.difference{margin-top:10px;line-height:1.7;padding:14px;border-radius:13px;background:#171b24}.difference{border:1px dashed var(--line)}.roles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}.role{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px}.roleName{font-size:24px;font-weight:800}.role p{color:#d4d9e3;line-height:1.7;margin-bottom:0}.resultIntro{background:#12161e;border:1px solid var(--line);border-radius:15px;padding:16px;margin:18px 0;line-height:1.7}
-.genderPick{margin:18px auto 20px;max-width:420px}.genderLabel{display:block;color:var(--muted);font-size:14px;margin-bottom:10px}.genderBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.genderBtn{padding:12px 18px;border:1px solid var(--line);background:#181c25;color:var(--text);border-radius:999px;cursor:pointer;font-weight:800}.genderBtn.active{background:var(--accent);color:#17120d;border-color:var(--accent)}.primary:disabled{opacity:.45;cursor:not-allowed}.shareWrap{margin:18px auto 28px;max-width:650px}.shareHint{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 0}.shareCard{position:relative;overflow:hidden;background:linear-gradient(145deg,#11151d,#202634);border:1px solid #40485b;border-radius:26px;padding:34px;box-shadow:0 18px 60px rgba(0,0,0,.26)}.shareCard:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-120px;background:radial-gradient(circle,rgba(228,192,122,.18),transparent 68%)}.shareBrand{font-size:11px;letter-spacing:.18em;color:var(--accent);font-weight:900}.shareTitle{font-size:30px;font-weight:900;margin:12px 0 24px}.shareHero{padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.shareHero span,.shareMini span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.shareHero strong{display:block;font-size:38px;line-height:1.15}.shareHero em{font-style:normal;color:var(--muted);font-size:13px}.shareSecond{margin:14px 0 20px;color:#dce1ea}.shareGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.shareMini{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:12px}.shareMini strong{font-size:17px}.shareMini em{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-style:normal;line-height:1.35}.shareQuote{margin-top:20px;line-height:1.7;color:#d9dde6;font-size:14px}.sectionBreak{display:flex;align-items:center;gap:14px;margin:30px 0 18px;color:var(--muted);font-size:13px;letter-spacing:.12em}.sectionBreak:before,.sectionBreak:after{content:"";height:1px;background:var(--line);flex:1}.bookStory{margin-top:12px;padding:11px 12px;border-radius:11px;background:#181d27;color:#bfc7d4;font-size:13px;line-height:1.65}.bookStory strong{color:#e7d1a5}.roleReason{margin-top:10px}.fullResultTitle{margin-top:0}.resultQuick{--role-color:#e4c07a;--role-soft:rgba(228,192,122,.08);position:relative;margin:16px 0 26px;padding:22px 22px 20px;border:1px solid var(--role-color);border-radius:18px;background:linear-gradient(135deg,var(--role-soft),var(--panel2) 55%)}.resultQuick .quickLabel{color:var(--role-color);font-size:12px;font-weight:800;letter-spacing:.08em}.resultQuick .quickName{font-size:clamp(34px,7vw,48px);font-weight:900;line-height:1.15;margin:8px 0 4px}.resultQuick .quickBook{color:var(--muted);font-size:13px}.resultQuick .quickNote{margin:13px 0 0;color:#d9dde6;line-height:1.75}.resultActions{display:flex;justify-content:center;align-items:center;gap:12px;margin:28px 0 8px}.resultActions .primary,.resultActions .secondaryAction{min-width:150px}.restartBtn{margin-left:0}.shareSource{display:none!important}
+.genderPick{margin:18px auto 20px;max-width:420px}.genderLabel{display:block;color:var(--muted);font-size:14px;margin-bottom:10px}.genderBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.genderBtn{padding:12px 18px;border:1px solid var(--line);background:#181c25;color:var(--text);border-radius:999px;cursor:pointer;font-weight:800}.genderBtn.active{background:var(--accent);color:#17120d;border-color:var(--accent)}.primary:disabled{opacity:.45;cursor:not-allowed}.shareWrap{margin:18px auto 28px;max-width:650px}.shareHint{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 0}.shareCard{position:relative;overflow:hidden;background:linear-gradient(145deg,#0e1219,#202838);border:1px solid #40485b;border-radius:26px;padding:34px;box-shadow:0 18px 60px rgba(0,0,0,.26)}.shareCard:before{content:"";position:absolute;width:310px;height:310px;border-radius:50%;right:-118px;top:-145px;background:radial-gradient(circle,rgba(228,192,122,.22),transparent 68%)}.shareBrand{font-size:10px;letter-spacing:.22em;color:var(--accent);font-weight:900}.shareTitle{font-size:22px;font-weight:850;margin:9px 0 18px;color:#dfe3ea}.shareHero{padding:19px 0 16px;border-top:1px solid var(--line);border-bottom:0}.shareHero span,.shareMini span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px;font-weight:800;letter-spacing:.04em}.shareHero strong{display:block;font-size:clamp(46px,9vw,62px);line-height:1.03;letter-spacing:-.025em}.shareHero em{display:block;font-style:normal;color:var(--muted);font-size:12px;margin-top:6px}.shareFork{margin-top:16px;padding:13px 14px;border-left:3px solid var(--role-color);border-radius:0 12px 12px 0;background:linear-gradient(90deg,var(--role-soft),rgba(255,255,255,.018));color:#eef0f4}.shareFork b{display:block;color:var(--role-color);font-size:10px;letter-spacing:.10em;margin-bottom:5px}.shareFork p{margin:0;font-size:13px;line-height:1.55}.rareCombo{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 10px;border:1px solid rgba(228,192,122,.34);border-radius:999px;background:rgba(228,192,122,.07);font-size:11px;color:#e7d7b6}.rareCombo b{color:#f2c976}.shareSecond{margin:14px 0 12px;padding:11px 13px;color:#dce1ea;border-radius:13px}.shareSecond .roleLabel{display:block;font-size:10px;letter-spacing:.08em;margin-bottom:3px}.shareSecond strong{display:block;font-size:24px;line-height:1.15}.shareSecond em{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-style:normal}.shareSecondReason{display:block;margin-top:6px;color:#c8ced8;font-size:11px;line-height:1.42}.shareGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.shareMini{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:11px 12px;min-height:116px}.shareMini strong{display:block;font-size:23px;line-height:1.08;letter-spacing:-.015em}.shareMini em{display:block;margin-top:3px;color:var(--muted);font-size:9.5px;font-style:normal;line-height:1.25}.shareMiniReason{display:block;margin-top:7px;color:#cbd1db;font-size:10.5px;line-height:1.38}.shareQuote{margin-top:12px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);line-height:1.5;color:#aeb6c4;font-size:10.5px}.sectionBreak{display:flex;align-items:center;gap:14px;margin:30px 0 18px;color:var(--muted);font-size:13px;letter-spacing:.12em}.sectionBreak:before,.sectionBreak:after{content:"";height:1px;background:var(--line);flex:1}.bookStory{margin-top:12px;padding:11px 12px;border-radius:11px;background:#181d27;color:#bfc7d4;font-size:13px;line-height:1.65}.bookStory strong{color:#e7d1a5}.roleReason{margin-top:10px}.fullResultTitle{margin-top:0}.resultQuick{--role-color:#e4c07a;--role-soft:rgba(228,192,122,.08);position:relative;margin:16px 0 26px;padding:22px 22px 20px;border:1px solid var(--role-color);border-radius:18px;background:linear-gradient(135deg,var(--role-soft),var(--panel2) 55%)}.resultQuick .quickLabel{color:var(--role-color);font-size:12px;font-weight:800;letter-spacing:.08em}.resultQuick .quickName{font-size:clamp(34px,7vw,48px);font-weight:900;line-height:1.15;margin:8px 0 4px}.resultQuick .quickBook{color:var(--muted);font-size:13px}.resultQuick .quickNote{margin:13px 0 0;color:#d9dde6;line-height:1.75}.resultActions{display:flex;justify-content:center;align-items:center;gap:12px;margin:28px 0 8px}.resultActions .primary,.resultActions .secondaryAction{min-width:150px}.restartBtn{margin-left:0}.shareSource{display:none!important}
 .quizMeta{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center}.quizMeta .progress{grid-column:1/-1;margin:0;height:6px}.remaining{color:var(--muted);letter-spacing:.04em;white-space:nowrap}.bridge{margin:0 0 12px;padding:0;color:#d9dde6;line-height:1.82;font-size:15.8px;font-style:normal;white-space:normal}.bridge:empty{display:none}.shareActions{text-align:center;margin-top:14px}.shareBtn{min-width:140px}.sharePreview{margin:16px auto 0;max-width:560px}.sharePreview img{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.24)}.sharePreview p{margin:0 0 10px;color:var(--muted);font-size:13px}.shareDownload{display:inline-block;margin-top:10px;color:#17120d;background:var(--accent);padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800}
 .actFlash{animation:actIn .35s ease}@keyframes actIn{from{opacity:.35;transform:translateY(3px)}to{opacity:1;transform:none}}
 /* Act atmosphere: color changes only presentation, never scoring. */
@@ -9,7 +9,7 @@
 #quiz:before{content:"";position:absolute;inset:-180px -160px auto auto;width:430px;height:430px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,var(--act-glow),transparent 67%);transition:background .9s ease;z-index:0}
 #quiz>*{position:relative;z-index:1}#quiz #act{color:var(--act-accent);transition:color .75s ease}#quiz .progress span{background:linear-gradient(90deg,var(--act-accent),var(--act-accent2));transition:width .25s,background .75s ease}#quiz .choice b{color:var(--act-accent);transition:color .75s ease}#quiz .choice.selected{border-color:var(--act-accent);box-shadow:0 0 0 1px var(--act-line),0 8px 24px var(--act-glow)}#quiz .next{border-color:var(--act-line);box-shadow:0 8px 28px var(--act-glow);transition:border-color .75s ease,box-shadow .75s ease,transform .15s}
 /* Result role identity: stable role color + very small character signature. */
-.resultMain,.second,.role,.shareHero,.shareSecond,.shareMini{--role-color:#e4c07a;--role-soft:rgba(228,192,122,.08);--char-color:#9aa4b2}
+.resultMain,.second,.role,.shareHero,.shareSecond,.shareMini,.shareFork{--role-color:#e4c07a;--role-soft:rgba(228,192,122,.08);--char-color:#9aa4b2}
 .resultMain{position:relative;border-left:3px solid var(--role-color);padding:2px 0 4px 18px;background:linear-gradient(90deg,var(--role-soft),transparent 55%);border-radius:0 14px 14px 0}.resultMain .resultIntro strong,.resultMain .big{color:var(--role-color)}
 .second{position:relative;border-top:0;border-left:3px solid var(--role-color);padding:16px 14px 10px 18px;background:linear-gradient(90deg,var(--role-soft),transparent 65%);border-radius:0 14px 14px 0}.second>strong{color:var(--role-color)}
 .role{position:relative;overflow:hidden;border-color:var(--role-color);background:linear-gradient(135deg,var(--role-soft),var(--panel2) 38%)}.role:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--role-color)}.role h3{margin-top:0;color:var(--role-color)}
@@ -17,8 +17,8 @@
 .shareHero{border-top-color:var(--role-color);border-bottom-color:var(--role-color);background:linear-gradient(90deg,var(--role-soft),transparent 64%);margin:0 -10px;padding:20px 10px}.shareHero span{color:var(--role-color)}.shareHero strong{display:inline-block;color:#f3f4f6}.shareSecond{border-left:2px solid var(--role-color);padding:9px 12px;margin:16px 0 20px;background:linear-gradient(90deg,var(--role-soft),transparent 72%);border-radius:0 10px 10px 0}.shareSecond .roleLabel{color:var(--role-color)}
 .shareMini{position:relative;overflow:hidden;border-color:var(--role-color);background:linear-gradient(135deg,var(--role-soft),rgba(255,255,255,.025) 58%)}.shareMini:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--role-color)}.shareMini span{color:var(--role-color)}
 /* Screenshot mode. */
-body.modalOpen{overflow:hidden}.shareModal{position:fixed;inset:0;z-index:1000;background:rgba(5,7,11,.88);backdrop-filter:blur(12px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}.shareModalInner{width:min(96vw,620px);min-height:min-content;margin:auto 0;overflow:visible}.shareModalTop{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px}.shareModalTitle{font-size:14px;color:#d9dde6;letter-spacing:.08em}.shareClose{border:1px solid #3b4353;background:#181d27;color:#e7eaf0;border-radius:999px;padding:8px 13px;cursor:pointer}.shareStage{display:flex;justify-content:center}.shareModalCard{width:min(88vw,540px,calc((100dvh - 190px)*.8));max-width:540px;aspect-ratio:4/5;min-height:0;padding:clamp(22px,5vw,42px);display:flex;flex-direction:column}.shareModalCard .shareTitle{font-size:clamp(25px,5vw,34px);margin-bottom:18px}.shareModalCard .shareHero strong{font-size:clamp(34px,7vw,48px)}.shareModalCard .shareGrid{flex:0 0 auto}.shareModalCard .shareQuote{margin-top:auto;padding-top:16px}.shareModalHint{text-align:center;color:#a9b0bf;font-size:13px;line-height:1.65;margin:12px 0 0}.shareModalActions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}.shareModalActions button{min-width:118px}.secondaryAction{background:#202633;color:#eef0f4;border:1px solid #414a5d;border-radius:999px;padding:12px 18px;font-weight:800;cursor:pointer}
-@media(max-width:700px){.roles{grid-template-columns:1fr}.resultActions{gap:9px}.resultActions .primary,.resultActions .secondaryAction{min-width:0;flex:1;padding-left:12px;padding-right:12px}.resultQuick{padding:19px 18px}.resultQuick .quickNote{font-size:14px}.panel{padding:20px}.shareCard{padding:24px}.shareHero strong{font-size:32px}.shareTitle{font-size:26px}#quiz{padding-top:82px}.quizMeta{position:fixed;z-index:60;top:max(8px,env(safe-area-inset-top));left:12px;right:12px;padding:10px 13px;border:1px solid var(--act-line);border-radius:16px;background:rgba(18,22,30,.94);box-shadow:0 8px 28px rgba(0,0,0,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.quizMeta #act{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.remaining{font-size:11px}.shareModalCard{width:min(92vw,calc((100dvh - 185px)*.8));padding:clamp(15px,4.8vw,22px)}.shareModalCard .shareTitle{font-size:clamp(22px,6vw,29px);margin-bottom:12px}.shareModalCard .shareHero{padding-top:14px;padding-bottom:14px}.shareModalCard .shareHero strong{font-size:clamp(29px,8vw,39px)}.shareModalCard .shareGrid{gap:7px}.shareModalCard .shareMini{padding:8px}.shareModalCard .shareMini strong{font-size:14px}.shareModalCard .shareMini em{font-size:10px}.shareModalCard .shareQuote{font-size:11px;line-height:1.55;padding-top:10px}.shareModalHint{font-size:12px;margin-top:9px}.shareModalActions{margin-top:9px}.shareModalActions button{padding:10px 14px}}
+body.modalOpen{overflow:hidden}.shareModal{position:fixed;inset:0;z-index:1000;background:rgba(5,7,11,.88);backdrop-filter:blur(12px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}.shareModalInner{width:min(96vw,620px);min-height:min-content;margin:auto 0;overflow:visible}.shareModalTop{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px}.shareModalTitle{font-size:14px;color:#d9dde6;letter-spacing:.08em}.shareClose{border:1px solid #3b4353;background:#181d27;color:#e7eaf0;border-radius:999px;padding:8px 13px;cursor:pointer}.shareStage{display:flex;justify-content:center}.shareModalCard{width:min(88vw,540px,calc((100dvh - 190px)*.8));max-width:540px;aspect-ratio:4/5;min-height:0;padding:clamp(22px,5vw,42px);display:flex;flex-direction:column}.shareModalCard .shareTitle{font-size:clamp(18px,4vw,23px);margin-bottom:10px}.shareModalCard .shareHero strong{font-size:clamp(43px,8vw,60px)}.shareModalCard .shareHero{padding:12px 0 8px}.shareModalCard .shareFork{margin-top:9px;padding:8px 10px}.shareModalCard .shareFork p{font-size:11.5px;line-height:1.42}.shareModalCard .rareCombo{margin-top:8px;padding:5px 8px;font-size:10px}.shareModalCard .shareSecond{margin:7px 0 8px;padding:8px 10px}.shareModalCard .shareSecond strong{font-size:21px}.shareModalCard .shareSecondReason{font-size:10px;margin-top:4px}.shareModalCard .shareGrid{flex:0 0 auto;gap:7px}.shareModalCard .shareMini{padding:8px 9px;min-height:0}.shareModalCard .shareMini strong{font-size:20px}.shareModalCard .shareMiniReason{font-size:9.5px;line-height:1.3;margin-top:5px}.shareModalCard .shareMini em{font-size:8.5px}.shareModalCard .shareQuote{margin-top:auto;padding-top:9px;font-size:9.5px}.shareModalHint{text-align:center;color:#a9b0bf;font-size:13px;line-height:1.65;margin:12px 0 0}.shareModalActions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}.shareModalActions button{min-width:118px}.secondaryAction{background:#202633;color:#eef0f4;border:1px solid #414a5d;border-radius:999px;padding:12px 18px;font-weight:800;cursor:pointer}
+@media(max-width:700px){.roles{grid-template-columns:1fr}.resultActions{gap:9px}.resultActions .primary,.resultActions .secondaryAction{min-width:0;flex:1;padding-left:12px;padding-right:12px}.resultQuick{padding:19px 18px}.resultQuick .quickNote{font-size:14px}.panel{padding:20px}.shareCard{padding:24px}.shareHero strong{font-size:32px}.shareTitle{font-size:26px}#quiz{padding-top:82px}.quizMeta{position:fixed;z-index:60;top:max(8px,env(safe-area-inset-top));left:12px;right:12px;padding:10px 13px;border:1px solid var(--act-line);border-radius:16px;background:rgba(18,22,30,.94);box-shadow:0 8px 28px rgba(0,0,0,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.quizMeta #act{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.remaining{font-size:11px}.shareModalCard{width:min(92vw,calc((100dvh - 185px)*.8));padding:clamp(15px,4.8vw,22px)}.shareModalCard .shareTitle{font-size:clamp(17px,5vw,21px);margin-bottom:8px}.shareModalCard .shareHero{padding-top:14px;padding-bottom:14px}.shareModalCard .shareHero strong{font-size:clamp(29px,8vw,39px)}.shareModalCard .shareGrid{gap:7px}.shareModalCard .shareMini{padding:8px}.shareModalCard .shareMini strong{font-size:14px}.shareModalCard .shareMini em{font-size:10px}.shareModalCard .shareQuote{font-size:11px;line-height:1.55;padding-top:10px}.shareModalHint{font-size:12px;margin-top:9px}.shareModalActions{margin-top:9px}.shareModalActions button{padding:10px 14px}}
 
 /* Rhythm layer: stage identity stays visible but deliberately quiet. */
 #quiz #act{font-size:11px;opacity:.72;letter-spacing:.08em;font-weight:700}
@@ -65,8 +65,175 @@ function characterColor(c){return CHARACTER_PALETTE[stableHash(c.id||c.name)%CHA
 function roleStyle(role,c){const t=ROLE_THEME[role]||ROLE_THEME.main;return `--role-color:${t.color};--role-soft:${t.soft};--char-color:${characterColor(c)}`}
 function applyActTheme(act){const t=ACT_THEMES[act]||ACT_THEMES[1],el=$('#quiz');el.style.setProperty('--act-accent',t.accent);el.style.setProperty('--act-accent2',t.accent2);el.style.setProperty('--act-glow',t.glow);el.style.setProperty('--act-line',t.line)}
 function stageFit(q,act){if(q.follow)return 1;const d=Math.abs((q.stage||STAGE[q.id]||2)-act);return d===0?1:d===1?.82:d===2?.56:.34}
-function qScore(q,h0=ent(Object.values(state.p))){const ig=Math.max(0,h0-expEnt(q)),nv=q.follow?.88:novelty(q),ch=challenge(q),lead=topCharacters(1)[0]?.p||0,rw=lead>.20?.40:lead>.12?.22:.08;const mw=q.measureWeight??1,qp=q.qualityPenalty??0;return{q,ig,score:mw*(1.08*ig)+.24*nv+rw*ch+(q.follow?.06:0)-qp}}
+function qScore(q,h0=ent(Object.values(state.p))){const ig=Math.max(0,h0-expEnt(q)),nv=q.follow?.88:novelty(q),ch=challenge(q),lead=topCharacters(1)[0]?.p||0,rw=lead>.20?.40:lead>.12?.22:.08;const mw=q.measureWeight??1,qp=q.qualityPenalty??0,aq=q.follow?0:autoQualityAdjustment(q);return{q,ig,score:mw*(1.08*ig)+.24*nv+rw*ch+(q.follow?.06:0)-qp+aq}}
 function clusterEligible(q){if(!q.cluster||q.cluster.length<2)return true;const top=topCharacters(q.clusterTop||8),seen=new Set(top.map(x=>x.c.id));let hits=0,mass=0;for(const id of q.cluster){if(seen.has(id))hits++;mass+=state.p[id]||0}return hits>=2&&mass>=(q.clusterGate??.08)}
+
+/* === Semi-automatic question quality audit ===
+   Human S/A/B/C remains authoritative.
+   Automatic metrics audit, flag and provide only a tiny bounded tie-breaker. */
+const AUTO_QUALITY_CFG={
+  selectionAssistMax:.002,
+  suggestedBands:{S:.30,A:.75,B:.95}
+};
+
+function _aqEntropy(p){
+  const z=p.reduce((a,b)=>a+b,0)||1;
+  let h=0;
+  for(const v0 of p){const v=v0/z;if(v>0)h-=v*Math.log2(v)}
+  return h
+}
+function _aqCharIds(q){return q.cluster?.length?q.cluster:CHARACTERS.map(c=>c.id)}
+function _aqRows(q,local=true){
+  const ids=local?_aqCharIds(q):CHARACTERS.map(c=>c.id);
+  return ids.map(id=>{
+    let r=[0,1,2,3].map(a=>lik(q,id,a)),z=r.reduce((x,y)=>x+y,0)||1;
+    return r.map(x=>x/z)
+  })
+}
+function _aqRawDiscrimination(q){
+  const rows=_aqRows(q,true);if(rows.length<2)return 0;
+  const mean=[0,0,0,0];
+  rows.forEach(r=>r.forEach((v,i)=>mean[i]+=v/rows.length));
+  const mi=_aqEntropy(mean)-rows.reduce((s,r)=>s+_aqEntropy(r),0)/rows.length;
+  return Math.max(0,mi/2)
+}
+function _aqBalance(q){
+  const rows=_aqRows(q,true);if(!rows.length)return .5;
+  const mean=[0,0,0,0];rows.forEach(r=>r.forEach((v,i)=>mean[i]+=v/rows.length));
+  return Math.max(0,Math.min(1,_aqEntropy(mean)/2))
+}
+function _aqClarity(q){
+  const lens=(q.choices||[]).map(x=>x.length);if(lens.length!==4)return .4;
+  const max=Math.max(...lens),min=Math.min(...lens),med=[...lens].sort((a,b)=>a-b).slice(1,3).reduce((a,b)=>a+b,0)/2;
+  const spread=Math.min(1,(max-min)/55);
+  const longDominance=Math.min(1,Math.max(0,max-med)/45);
+  const storyLen=(q.story||'').length;
+  const storyPenalty=Math.min(1,Math.max(0,Math.abs(storyLen-95)-55)/180);
+  return Math.max(0,Math.min(1,1-.42*spread-.28*longDominance-.30*storyPenalty))
+}
+function _aqStructureRisk(q){
+  const cues=['综合','重新','共同','再决定','交给','第三方','独立机构','同时','兼顾'];
+  const counts=(q.choices||[]).map(x=>cues.reduce((n,c)=>n+(x.includes(c)?1:0),0));
+  if(!counts.length)return .5;
+  const sorted=[...counts].sort((a,b)=>a-b),med=(sorted[1]+sorted[2])/2;
+  const cueRisk=Math.max(0,Math.min(1,(Math.max(...counts)-med)/3));
+  const lens=q.choices.map(x=>x.length),ls=[...lens].sort((a,b)=>a-b),lmed=(ls[1]+ls[2])/2;
+  const lenRisk=Math.max(0,Math.min(1,(Math.max(...lens)-lmed)/45));
+  return .58*cueRisk+.42*lenRisk
+}
+function _aqRhythmValue(q){
+  const ux=q.ux||{};let s=.42;
+  if(ux.weight==='light')s+=.20;
+  if(ux.hook)s+=.13;
+  if(ux.length==='short')s+=.08;
+  if(ux.lightQuality)s+=.13*Math.max(0,Math.min(1,ux.lightQuality));
+  return Math.max(0,Math.min(1,s))
+}
+function _aqQuickScore(q){
+  const raw=_aqRawDiscrimination(q);
+  const discrimination=1-Math.exp(-raw/.012);
+  const balance=_aqBalance(q),clarity=_aqClarity(q),risk=_aqStructureRisk(q);
+  const hook=q.ux?.hook?1:.45,rhythm=_aqRhythmValue(q);
+  let score=.42*discrimination+.12*balance+.13*clarity+.08*hook+.12*rhythm+.13*(1-risk);
+  if(q.retired)score=Math.min(score,.35);
+  return Math.max(0,Math.min(1,score))
+}
+let _AQ_SELECTION_BASELINE=null;
+function _aqSelectionBaseline(){
+  if(_AQ_SELECTION_BASELINE!=null)return _AQ_SELECTION_BASELINE;
+  const xs=[...QUESTIONS,...CLUSTER_QUESTIONS].filter(q=>!q.retired).map(_aqQuickScore).sort((a,b)=>a-b);
+  const n=xs.length;
+  _AQ_SELECTION_BASELINE=n?(n%2?xs[(n-1)/2]:(xs[n/2-1]+xs[n/2])/2):.5;
+  return _AQ_SELECTION_BASELINE
+}
+function autoQualityAdjustment(q){
+  if(q.retired)return 0;
+  const delta=(_aqQuickScore(q)-_aqSelectionBaseline())*.006;
+  return Math.max(-AUTO_QUALITY_CFG.selectionAssistMax,Math.min(AUTO_QUALITY_CFG.selectionAssistMax,delta))
+}
+function _aqSignature(q){
+  return _aqRows(q,false).flatMap(r=>{const m=r.reduce((a,b)=>a+b,0)/4;return r.map(x=>x-m)})
+}
+function _aqCosine(a,b){
+  let dot=0,aa=0,bb=0;
+  for(let i=0;i<a.length;i++){dot+=a[i]*b[i];aa+=a[i]*a[i];bb+=b[i]*b[i]}
+  return aa&&bb?dot/Math.sqrt(aa*bb):0
+}
+function _aqPercentile(x,sorted){
+  let lo=0,hi=sorted.length;
+  while(lo<hi){const m=(lo+hi)>>1;if(sorted[m]<x)lo=m+1;else hi=m}
+  let a=lo;hi=sorted.length;
+  while(lo<hi){const m=(lo+hi)>>1;if(sorted[m]<=x)lo=m+1;else hi=m}
+  const b=lo;
+  return sorted.length?(a+b)/(2*sorted.length):.5
+}
+function autoQualityAudit(){
+  const pool=[...QUESTIONS,...CLUSTER_QUESTIONS];
+  const rawD=new Map(pool.map(q=>[q.id,_aqRawDiscrimination(q)]));
+  const dSorted=[...rawD.values()].sort((a,b)=>a-b);
+  const sig=new Map(pool.map(q=>[q.id,_aqSignature(q)]));
+  const rows=pool.map(q=>{
+    let nearest=null,redundancy=0;
+    for(const other of pool){
+      if(other.id===q.id)continue;
+      const s=Math.max(0,_aqCosine(sig.get(q.id),sig.get(other.id)));
+      if(s>redundancy){redundancy=s;nearest=other.id}
+    }
+    const discrimination=_aqPercentile(rawD.get(q.id),dSorted);
+    const uniqueness=1-redundancy,balance=_aqBalance(q),clarity=_aqClarity(q),risk=_aqStructureRisk(q);
+    const hook=q.ux?.hook?1:.45,rhythm=_aqRhythmValue(q);
+    let score=.38*discrimination+.20*uniqueness+.12*balance+.11*clarity+.07*hook+.12*rhythm-.08*risk;
+    score=Math.max(0,Math.min(1,score));
+    if(q.retired)score=Math.min(score,.35);
+    const human=q.qualityAudit?.currentGrade||null;
+    return {
+      id:q.id,title:q.title,
+      scope:q.cluster?.length?'cluster':'base',
+      retired:!!q.retired,
+      score:+score.toFixed(3),
+      human,
+      discrimination:+discrimination.toFixed(3),
+      rawDiscrimination:+rawD.get(q.id).toFixed(4),
+      uniqueness:+uniqueness.toFixed(3),
+      redundancy:+redundancy.toFixed(3),
+      nearest,
+      balance:+balance.toFixed(3),
+      clarity:+clarity.toFixed(3),
+      structureRisk:+risk.toFixed(3),
+      rhythmValue:+rhythm.toFixed(3)
+    }
+  }).sort((a,b)=>b.score-a.score);
+  const active=rows.filter(x=>!x.retired);
+  active.forEach((x,i)=>{
+    const p=(i+.5)/Math.max(1,active.length),b=AUTO_QUALITY_CFG.suggestedBands;
+    x.percentile=+p.toFixed(3);
+    x.suggested=p<=b.S?'S':p<=b.A?'A':p<=b.B?'B':'C'
+  });
+  rows.filter(x=>x.retired).forEach(x=>{x.percentile=1;x.suggested='C'});
+  const order={S:4,A:3,B:2,C:1};
+  rows.forEach(x=>x.gradeGap=x.human?(order[x.suggested]-order[x.human]):null);
+  const bySuggested=rows.reduce((m,x)=>(m[x.suggested]=(m[x.suggested]||0)+1,m),{});
+  const disagreements=rows.filter(x=>x.human&&x.human!==x.suggested);
+  const review=rows.filter(x=>!x.retired&&(Math.abs(x.gradeGap||0)>=1||x.redundancy>.92||x.structureRisk>.62||x.discrimination<.15))
+    .sort((a,b)=>(Math.abs(b.gradeGap||0)-Math.abs(a.gradeGap||0))||(a.score-b.score));
+  return {summary:{count:rows.length,bySuggested,disagreements:disagreements.length,review:review.length,selectionBaseline:+_aqSelectionBaseline().toFixed(3)},rows,disagreements,review}
+}
+function autoQualityQuestion(id){return autoQualityAudit().rows.find(x=>x.id===id)||null}
+function autoQualityReview(){return autoQualityAudit().review}
+globalThis.LIT_QUALITY={
+  audit:autoQualityAudit,
+  question:autoQualityQuestion,
+  review:autoQualityReview,
+  quick:x=>{const q=typeof x==='string'?[...QUESTIONS,...CLUSTER_QUESTIONS].find(q=>q.id===x):x;return q?{id:q.id,score:+_aqQuickScore(q).toFixed(3),adjustment:+autoQualityAdjustment(q).toFixed(4)}:null},
+  help:()=>({
+    audit:'LIT_QUALITY.audit() -> 130题完整自动审计',
+    review:'LIT_QUALITY.review() -> 需要人工复核的题',
+    question:"LIT_QUALITY.question('q001') -> 单题完整指标",
+    quick:"LIT_QUALITY.quick('q001') -> 快速质量分与选题微调"
+  })
+};
+/* === End semi-automatic quality audit === */
+
 function rankBase(){const h0=ent(Object.values(state.p));return QUESTIONS.filter(q=>!q.retired&&!state.used.has(q.id)&&clusterEligible(q)).map(q=>qScore(q,h0)).sort((a,b)=>b.score-a.score)}
 function sceneOf(q){if(q.follow&&QMAP[q.parent])return sceneOf(QMAP[q.parent]);const t=`${q.title} ${q.theme} ${q.story}`;if(/朋友|爱人|旧爱|婚|父|母|孩子|家族|导师|亲近|关系|承诺|伴侣/.test(t))return'relation';if(/公司|机构|学校|委员会|政府|领导|投票|法院|法庭|陪审|实验|医院|博物馆|组织|团队/.test(t))return'institution';if(/火灾|救援|危险|战争|敌人|囚犯|缺氧|干旱|生存|洪水|受伤|危机/.test(t))return'crisis';if(/船|岛|桥|边境|火车|航|旅|迁营|道路|城市|村庄|水路/.test(t))return'journey';if(/证据|真相|信件|档案|数据|研究|举报|头条|DNA|梦|算法|模型|信息|书|历史/.test(t))return'knowledge';if(/记忆|身份|复制|未来|人格|名字|自我|成名|意识/.test(t))return'identity';return'general'}
 const SCENE_NEAR=new Set(['journey|crisis','crisis|journey','institution|knowledge','knowledge|institution','relation|identity','identity|relation','relation|knowledge','knowledge|relation']);
@@ -232,10 +399,20 @@ function roleList(role){const anchors=topCharacters(role==='lover'?3:8),pool=rol
 function assignDistinct(w1,w2){const roles=['friend','lover','partner','mentor'],used=new Set([w1.id,w2.id]),lists=Object.fromEntries(roles.map(r=>[r,roleList(r)])),out={};for(const r of roles){const x=lists[r].find(v=>!used.has(v.c.id));if(!x)throw new Error(`No available character for ${r}`);out[r]=x;used.add(x.c.id)}return out}
 function roleWhy(role,anchor,c){const a=anchor.rel,r=c.rel,p=pronoun(c);if(role==='friend'){const common=Math.abs(a.warm-r.warm)<.18||Math.abs(a.playful-r.playful)<.18;return common?`${c.name}和你容易形成“知道对方为什么这样选”的默契；${p}的忠诚与稳定已经足够可靠，但系统不会因为这些数值越高就无限加分。真正重要的是你们在相处节奏、原则和情绪强度上是否合拍。`:`${c.name}并不是另一个你，这反而是优势。${p}在你较容易波动的地方能提供一点稳定或温度，但这种互补被限制在适度范围内，不会把性格越相反的人机械地判成越适合。`}if(role==='lover'){const close=Math.abs(a.intense-r.intense)<.16;return close?`${c.name}与你的情感强度和亲密节奏比较接近，所以吸引不只来自新鲜感，也来自“对方懂得这种认真”。但相似也意味着冲突时双方都可能坚持自己的感受，因此边界和坦白会决定这段关系能不能走远。`:`${c.name}与你并非同一种情感节奏，这使关系带有明显的互补性：一个人更容易推进，另一个人更能让关系慢下来确认边界。吸引力来自差异，而长期性取决于双方是否愿意把这种差异说清楚。`}if(role==='partner')return `${c.name}适合与你合作，不是因为${p}单纯“能力分最高”，而是${p}在判断、行动、主导程度上更接近你当前最需要的那一档；同时稳定、忠诚等基础协作能力达到一定水平后就不再无限加分。`;return `${c.name}适合作为导师，主要因为${p}在你相对需要提升的判断、稳定、原则或勇气上略高一档，同时自身成熟度达到基本门槛。系统也会避开控制欲或情绪强度过于极端的候选人，因此这里衡量的是“适合教你”，而不是“谁看起来最优秀”。`}
 const PROFILE_WORDS={loyal:'一旦关系真正建立，你通常不会轻易抽身',steady:'面对长期事情时，你更容易把承诺做到底',judgment:'遇到复杂局面时，你倾向于先看清事实和结构',principled:'环境变化时，你仍会保留一些不愿轻易交换的底线',warm:'你很难把具体的人完全变成抽象条件',intense:'真正重要的事进入生活以后，你很难只保持旁观',courage:'风险出现时，你往往更愿意作出行动性的回应',playful:'面对未知和变化，你更容易保留探索的余地',dominant:'局面失去控制时，你更愿意重新掌握主动权'};
+const SHARE_DIM_LABEL={warm:'温度',steady:'稳定性',intense:'投入强度',playful:'探索性',dominant:'主动性',loyal:'忠诚',judgment:'判断力',courage:'行动勇气',principled:'原则性'};
 function profileSummary(c,second=false){const dims=Object.keys(PROFILE_WORDS).sort((a,b)=>c.rel[b]-c.rel[a]).slice(0,2),body=`${PROFILE_WORDS[dims[0]]}，同时${PROFILE_WORDS[dims[1]]}`;return second?`${c.note}。${body}。因此${c.name}像是与你相邻的另一条文学路径，只是整体气质没有第一位那么贴近。`:`${c.note}。你和${c.name}接近的地方，更像是一种面对世界的方式：${body}。你们当然不会在每个处境里作出同样决定。`}
-function shareLine(w,roles){return `我在小说里最像 ${w.name}；${roles.friend.c.name} 更像朋友，${roles.lover.c.name} 更像爱人，而 ${roles.partner.c.name} 会是很好的搭档。`}
-function result(){$('#quiz').classList.add('hidden');$('#result').classList.remove('hidden');window.scrollTo({top:0,left:0,behavior:'auto'});const t=topCharacters(8),w=t[0].c,s=t[1].c,roles=assignDistinct(w,s);state.shareData={w,s,roles};if(state.shareUrl){URL.revokeObjectURL(state.shareUrl);state.shareUrl=null}$('#sharePreview').classList.add('hidden');
- $('#shareCard').innerHTML=`<div class="shareBrand">MY LITERARY CAST</div><div class="shareTitle">我在小说里更像谁？</div><div class="shareHero" style="${roleStyle('main',w)}"><span>最像我的人物</span><strong>${w.name}<i class="charSig"></i></strong><em>${w.book}</em></div><div class="shareSecond" style="${roleStyle('second',s)}"><span class="roleLabel">第二相近</span> · <strong>${s.name}</strong><i class="charSig"></i> ${s.book}</div><div class="shareGrid"><div class="shareMini" style="${roleStyle('friend',roles.friend.c)}"><span>朋友</span><strong>${roles.friend.c.name}<i class="charSig"></i></strong><em>${roles.friend.c.book}</em></div><div class="shareMini" style="${roleStyle('lover',roles.lover.c)}"><span>爱人</span><strong>${roles.lover.c.name}<i class="charSig"></i></strong><em>${roles.lover.c.book}</em></div><div class="shareMini" style="${roleStyle('partner',roles.partner.c)}"><span>合作伙伴</span><strong>${roles.partner.c.name}<i class="charSig"></i></strong><em>${roles.partner.c.book}</em></div><div class="shareMini" style="${roleStyle('mentor',roles.mentor.c)}"><span>导师</span><strong>${roles.mentor.c.name}<i class="charSig"></i></strong><em>${roles.mentor.c.book}</em></div></div><div class="shareQuote">“${shareLine(w,roles)}”</div>`;
+function histQuestion(h){return FID[h.qid]||QMAP[h.qid]||null}
+function histLik(h,id){const q=histQuestion(h);if(!q)return .25;if(q.follow){const raw=followProbsWith(q,id,h.parentAnswer)[h.answer];const parent=QMAP[q.parent];prep(parent);const cf=Math.min(.9,.42+.48*(parent._c[CIDX[id]]/255));return .25*(1-cf)+raw*cf}return lik(q,id,h.answer)}
+function compactChoice(s,n=34){let x=String(s||'').replace(/[。！？]+$/,'').replace(/^先/,'');return x.length>n?x.slice(0,n-1)+'…':x}
+function shareFork(w,s){let best=null;for(const h of state.hist){const a=Math.max(.001,histLik(h,w.id)),b=Math.max(.001,histLik(h,s.id)),gap=Math.log(a/b);if(!best||gap>best.gap)best={h,gap}}if(best&&best.gap>.04)return{label:`把你和 ${s.name} 分开的那一步`,text:`「${best.h.title}」里，你选择：${compactChoice(best.h.choice)}`};const dims=Object.keys(SHARE_DIM_LABEL).sort((a,b)=>(w.rel[b]-s.rel[b])-(w.rel[a]-s.rel[a]));const d=dims[0];return{label:`你更靠近 ${w.name} 的地方`,text:`${SHARE_DIM_LABEL[d]}这条线上，你明显更接近${w.name}。`}}
+function weightedProfile(){const out={};for(const d of Object.keys(SHARE_DIM_LABEL))out[d]=0;for(const [id,p] of Object.entries(state.p)){const r=CHARACTERS[CIDX[id]].rel;for(const d of Object.keys(out))out[d]+=p*r[d]}return out}
+function rareCombo(){const u=weightedProfile(),dims=Object.keys(SHARE_DIM_LABEL),med={};for(const d of dims){const a=CHARACTERS.map(c=>c.rel[d]).sort((x,y)=>x-y);med[d]=(a[49]+a[50])/2}let best=null;for(let i=0;i<dims.length;i++)for(let j=i+1;j<dims.length;j++){const a=dims[i],b=dims[j];if(u[a]<med[a]+.035||u[b]<med[b]+.035)continue;const count=CHARACTERS.filter(c=>c.rel[a]>=u[a]&&c.rel[b]>=u[b]).length;const strength=(u[a]-med[a])+(u[b]-med[b]);const score=(1-count/CHARACTERS.length)+.35*strength;if(!best||score>best.score)best={a,b,count,score}}if(!best){const top=dims.sort((a,b)=>(u[b]-med[b])-(u[a]-med[a])).slice(0,2);return{label:'鲜明组合',text:`较高${SHARE_DIM_LABEL[top[0]]} × 较高${SHARE_DIM_LABEL[top[1]]}`}}return{label:best.count<=12?'罕见组合':'少见组合',text:`高${SHARE_DIM_LABEL[best.a]} × 高${SHARE_DIM_LABEL[best.b]}`,basis:'100-character-model'}}
+function roleFork(role,anchor,c){const a=anchor.rel,r=c.rel;if(role==='friend'){const near=['warm','playful','principled','intense'].sort((x,y)=>Math.abs(a[x]-r[x])-Math.abs(a[y]-r[y]))[0];const extra=r.steady-a.steady>.09?'，而TA更稳':r.warm-a.warm>.09?'，而TA更有温度':'';return `${SHARE_DIM_LABEL[near]}很合拍${extra}`};if(role==='lover'){return Math.abs(a.intense-r.intense)<.16?'你们认真得很像，冲突在谁先让步':'一个更会推进，一个更会确认边界'}if(role==='partner'){const gain=['judgment','courage','dominant','steady'].sort((x,y)=>(r[y]-a[y])-(r[x]-a[x]))[0];return `你负责你的强项，TA在${SHARE_DIM_LABEL[gain]}上补位`};const gain=['judgment','steady','principled','courage'].sort((x,y)=>(r[y]-a[y])-(r[x]-a[x]))[0];return `TA最能把你的${SHARE_DIM_LABEL[gain]}再推高一档`}
+function secondFork(w,s){const dims=Object.keys(SHARE_DIM_LABEL).sort((a,b)=>Math.abs(w.rel[a]-s.rel[a])-Math.abs(w.rel[b]-s.rel[b]));const close=dims[0],diff=Object.keys(SHARE_DIM_LABEL).sort((a,b)=>Math.abs(w.rel[b]-s.rel[b])-Math.abs(w.rel[a]-s.rel[a]))[0];return `${SHARE_DIM_LABEL[close]}很接近，但${SHARE_DIM_LABEL[diff]}把你们分开`}
+function shareLine(w,roles,combo){return `${combo.text}。最像 ${w.name}；朋友 ${roles.friend.c.name}，爱人 ${roles.lover.c.name}。`}
+function result(){$('#quiz').classList.add('hidden');$('#result').classList.remove('hidden');window.scrollTo({top:0,left:0,behavior:'auto'});const t=topCharacters(8),w=t[0].c,s=t[1].c,roles=assignDistinct(w,s);if(state.shareUrl){URL.revokeObjectURL(state.shareUrl);state.shareUrl=null}$('#sharePreview').classList.add('hidden');
+ const fork=shareFork(w,s),combo=rareCombo();state.shareData={w,s,roles,fork,combo};
+ $('#shareCard').innerHTML=`<div class="shareBrand">MY LITERARY CAST</div><div class="shareTitle">我在小说里更像谁？</div><div class="shareHero" style="${roleStyle('main',w)}"><span>最像我的人物</span><strong>${w.name}<i class="charSig"></i></strong><em>${w.book}</em><div class="shareFork" style="${roleStyle('main',w)}"><b>${fork.label}</b><p>${fork.text}</p></div><div class="rareCombo"><b>${combo.label}</b><span>${combo.text}</span></div></div><div class="shareSecond" style="${roleStyle('second',s)}"><span class="roleLabel">第二相近</span><strong>${s.name}<i class="charSig"></i></strong><em>${s.book}</em><span class="shareSecondReason">${secondFork(w,s)}</span></div><div class="shareGrid">${[['friend','朋友'],['lover','爱人'],['partner','搭档'],['mentor','导师']].map(([k,label])=>{const c=roles[k].c;return `<div class="shareMini" style="${roleStyle(k,c)}"><span>${label}</span><strong>${c.name}<i class="charSig"></i></strong><em>${c.book}</em><span class="shareMiniReason">${roleFork(k,w,c)}</span></div>`}).join('')}</div><div class="shareQuote">${shareLine(w,roles,combo)}</div>`;
  $('#resultQuick').setAttribute('style',roleStyle('main',w));$('#resultQuick').innerHTML=`<div class="quickLabel">最像我的人物</div><div class="quickName">${w.name}<i class="charSig"></i></div><div class="quickBook">${w.book}</div><p class="quickNote">你和${w.name}最接近：${w.note}。</p>`;
  $('#main').innerHTML=`<div class="resultMain" style="${roleStyle('main',w)}"><div class="resultIntro"><strong>最相近的人物</strong></div><div class="big">${w.name}<i class="charSig"></i></div><div class="muted">${w.book}</div><p>${profileSummary(w)}</p><div class="bookStory"><strong>书中：</strong>${bookStory(w)}</div></div><div class="second" style="${roleStyle('second',s)}"><strong>第二相近</strong><div class="roleName">${s.name}<i class="charSig"></i></div><div class="muted">${s.book}</div><p>${profileSummary(s,true)}</p><div class="bookStory"><strong>书中：</strong>${bookStory(s)}</div></div>`;
  const labels={friend:'最适合做朋友',lover:'最适合成为爱人',partner:'最适合做合作伙伴',mentor:'最适合做导师'};$('#roles').innerHTML=Object.entries(roles).map(([k,x])=>`<div class="role" style="${roleStyle(k,x.c)}"><h3>${labels[k]}</h3><div class="roleName">${x.c.name}<i class="charSig"></i></div><div class="muted">${x.c.book}</div><p class="roleReason">${roleWhy(k,w,x.c)}</p><div class="bookStory"><strong>书中：</strong>${bookStory(x.c)}</div></div>`).join('')}
@@ -244,19 +421,31 @@ function canvasFont(size,weight=400){return `${weight} ${size}px -apple-system,B
 function wrapCanvas(ctx,text,maxWidth){const lines=[];let line='';for(const ch of String(text)){const test=line+ch;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=ch}else line=test}if(line)lines.push(line);return lines}
 function drawWrapped(ctx,text,x,y,maxWidth,lineHeight,maxLines=4){const lines=wrapCanvas(ctx,text,maxWidth).slice(0,maxLines);lines.forEach((line,i)=>ctx.fillText(line,x,y+i*lineHeight));return y+lines.length*lineHeight}
 function buildShareCanvas(){
- const d=state.shareData;if(!d)return null;const {w,s,roles}=d,canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext('2d');
- const bg=ctx.createLinearGradient(0,0,1080,1350);bg.addColorStop(0,'#0f131b');bg.addColorStop(1,'#222a39');ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1350);
- const glow=ctx.createRadialGradient(880,150,20,880,150,360);glow.addColorStop(0,'rgba(228,192,122,.20)');glow.addColorStop(1,'rgba(228,192,122,0)');ctx.fillStyle=glow;ctx.fillRect(520,0,560,520);
- roundedRect(ctx,70,65,940,1220,42,'rgba(23,27,37,.96)','#465064');
- ctx.fillStyle=ROLE_THEME.main.color;ctx.font=canvasFont(23,800);ctx.fillText('MY LITERARY CAST',125,135);
- ctx.fillStyle='#f3f4f6';ctx.font=canvasFont(55,900);ctx.fillText('我在小说里更像谁？',125,220);
- ctx.strokeStyle='#303747';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(125,270);ctx.lineTo(955,270);ctx.stroke();
- ctx.fillStyle=ROLE_THEME.main.color;ctx.font=canvasFont(25,600);ctx.fillText('最像我的人物',125,340);ctx.fillStyle='#f3f4f6';ctx.font=canvasFont(78,900);ctx.fillText(w.name,125,430);ctx.fillStyle=characterColor(w);ctx.beginPath();ctx.arc(Math.min(930,125+ctx.measureText(w.name).width+22),407,7,0,Math.PI*2);ctx.fill();ctx.fillStyle='#a9b0bf';ctx.font=canvasFont(28,500);ctx.fillText(w.book,125,478);
- ctx.strokeStyle=ROLE_THEME.main.color;ctx.globalAlpha=.7;ctx.beginPath();ctx.moveTo(125,525);ctx.lineTo(955,525);ctx.stroke();ctx.globalAlpha=1;
- ctx.fillStyle=ROLE_THEME.second.color;ctx.font=canvasFont(31,600);ctx.fillText('第二相近 ·',125,585);ctx.fillStyle='#f3f4f6';ctx.font=canvasFont(34,800);ctx.fillText(s.name,300,585);ctx.fillStyle=characterColor(s);ctx.beginPath();ctx.arc(Math.min(930,300+ctx.measureText(s.name).width+18),574,6,0,Math.PI*2);ctx.fill();ctx.font=canvasFont(25,500);ctx.fillStyle='#a9b0bf';ctx.fillText(s.book,300,625);
- const boxes=[['朋友',roles.friend.c,'friend'],['爱人',roles.lover.c,'lover'],['合作伙伴',roles.partner.c,'partner'],['导师',roles.mentor.c,'mentor']];let by=680;
- boxes.forEach((it,i)=>{const col=i%2,row=Math.floor(i/2),x=125+col*420,y=by+row*190,t=ROLE_THEME[it[2]];roundedRect(ctx,x,y,395,165,22,t.soft,t.color);ctx.fillStyle=t.color;ctx.font=canvasFont(22,600);ctx.fillText(it[0],x+28,y+42);ctx.fillStyle='#f3f4f6';ctx.font=canvasFont(34,800);ctx.fillText(it[1].name,x+28,y+88);ctx.fillStyle=characterColor(it[1]);ctx.beginPath();ctx.arc(Math.min(x+365,x+28+ctx.measureText(it[1].name).width+17),y+78,5.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#a9b0bf';ctx.font=canvasFont(21,500);drawWrapped(ctx,it[1].book,x+28,y+124,330,27,2)});
- ctx.fillStyle='#d9dde6';ctx.font=canvasFont(27,400);drawWrapped(ctx,`“${shareLine(w,roles)}”`,125,1110,830,42,3);return canvas
+ const d=state.shareData;if(!d)return null;const {w,s,roles,fork,combo}=d,canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext('2d');
+ const bg=ctx.createLinearGradient(0,0,1080,1350);bg.addColorStop(0,'#0c1118');bg.addColorStop(1,'#222b3c');ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1350);
+ const glow=ctx.createRadialGradient(880,130,20,880,130,390);glow.addColorStop(0,'rgba(228,192,122,.23)');glow.addColorStop(1,'rgba(228,192,122,0)');ctx.fillStyle=glow;ctx.fillRect(500,0,580,540);
+ roundedRect(ctx,65,58,950,1234,42,'rgba(20,25,35,.965)','#465064');
+ ctx.fillStyle=ROLE_THEME.main.color;ctx.font=canvasFont(20,800);ctx.fillText('MY LITERARY CAST',120,122);
+ ctx.fillStyle='#cfd5de';ctx.font=canvasFont(34,800);ctx.fillText('我在小说里更像谁？',120,172);
+ ctx.fillStyle=ROLE_THEME.main.color;ctx.font=canvasFont(22,700);ctx.fillText('最像我的人物',120,242);
+ ctx.fillStyle='#f5f6f8';ctx.font=canvasFont(94,900);ctx.fillText(w.name,120,342);
+ ctx.fillStyle=characterColor(w);ctx.beginPath();ctx.arc(Math.min(950,120+ctx.measureText(w.name).width+25),316,8,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#9fa8b7';ctx.font=canvasFont(24,500);ctx.fillText(w.book,120,385);
+ roundedRect(ctx,120,423,840,148,20,ROLE_THEME.main.soft,ROLE_THEME.main.color);
+ ctx.fillStyle=ROLE_THEME.main.color;ctx.font=canvasFont(18,800);ctx.fillText(fork.label,148,460);
+ ctx.fillStyle='#eef0f4';ctx.font=canvasFont(27,600);drawWrapped(ctx,fork.text,148,505,778,38,2);
+ ctx.font=canvasFont(19,600);roundedRect(ctx,120,590,Math.min(640,265+ctx.measureText(combo.text).width),54,27,'rgba(228,192,122,.07)','rgba(228,192,122,.36)');
+ ctx.fillStyle='#f2c976';ctx.font=canvasFont(18,800);ctx.fillText(combo.label,146,625);
+ ctx.fillStyle='#e5d9bf';ctx.font=canvasFont(19,600);ctx.fillText(combo.text,245,625);
+ roundedRect(ctx,120,672,840,116,18,ROLE_THEME.second.soft,ROLE_THEME.second.color);
+ ctx.fillStyle=ROLE_THEME.second.color;ctx.font=canvasFont(18,700);ctx.fillText('第二相近',145,708);
+ ctx.fillStyle='#f3f4f6';ctx.font=canvasFont(34,850);ctx.fillText(s.name,145,752);
+ ctx.fillStyle='#b5bdc9';ctx.font=canvasFont(18,500);ctx.fillText(secondFork(w,s),390,750);
+ const boxes=[['朋友',roles.friend.c,'friend'],['爱人',roles.lover.c,'lover'],['搭档',roles.partner.c,'partner'],['导师',roles.mentor.c,'mentor']];
+ boxes.forEach((it,i)=>{const col=i%2,row=Math.floor(i/2),x=120+col*425,y=818+row*178,t=ROLE_THEME[it[2]];roundedRect(ctx,x,y,400,158,20,t.soft,t.color);ctx.fillStyle=t.color;ctx.font=canvasFont(18,700);ctx.fillText(it[0],x+24,y+34);ctx.fillStyle='#f5f6f8';ctx.font=canvasFont(35,850);ctx.fillText(it[1].name,x+24,y+78);ctx.fillStyle=characterColor(it[1]);ctx.beginPath();ctx.arc(Math.min(x+370,x+24+ctx.measureText(it[1].name).width+16),y+68,5.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#c4cbd6';ctx.font=canvasFont(17,500);drawWrapped(ctx,roleFork(it[2],w,it[1]),x+24,y+111,346,24,2);ctx.fillStyle='#8f99a8';ctx.font=canvasFont(14,500);drawWrapped(ctx,it[1].book,x+24,y+145,346,18,1)});
+ ctx.strokeStyle='rgba(255,255,255,.08)';ctx.beginPath();ctx.moveTo(120,1192);ctx.lineTo(960,1192);ctx.stroke();
+ ctx.fillStyle='#aeb6c4';ctx.font=canvasFont(19,500);drawWrapped(ctx,shareLine(w,roles,combo),120,1230,840,29,2);
+ ctx.fillStyle='#6f7887';ctx.font=canvasFont(16,600);ctx.fillText('100 个文学人物 · 动态选择题',120,1272);return canvas
 }
 function showShareFallback(blob){if(state.shareUrl)URL.revokeObjectURL(state.shareUrl);state.shareUrl=URL.createObjectURL(blob);$('#shareImage').src=state.shareUrl;$('#shareDownload').href=state.shareUrl;$('#sharePreview').classList.remove('hidden')}
 function openShareMode(){if(!state.shareData)return;$('#shareModalCard').innerHTML=$('#shareCard').innerHTML;$('#shareModal').classList.remove('hidden');$('#shareModal').setAttribute('aria-hidden','false');document.body.classList.add('modalOpen')}
