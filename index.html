@@ -168,9 +168,53 @@ function conf(q,id){if(!q.follow){prep(q);return q._c[CIDX[id]]/255}const parent
 function lik(q,id,a){const cf=conf(q,id),raw=rawLik(q,id,a);return .25*(1-cf)+raw*cf}
 function topCharacters(n=8){return Object.entries(state.p).sort((a,b)=>b[1]-a[1]).slice(0,n).map(([id,p])=>({c:CHARACTERS[CIDX[id]],p}))}
 function pred(q){let d=[0,0,0,0];for(const[id,p]of Object.entries(state.p)){let l=[0,1,2,3].map(a=>lik(q,id,a)),z=l.reduce((a,b)=>a+b,0)||1;l=l.map(x=>x/z);for(let a=0;a<4;a++)d[a]+=p*l[a]}let z=d.reduce((a,b)=>a+b,0)||1;return d.map(x=>x/z)}
-function expEnt(q){const pd=pred(q);let e=0;for(let a=0;a<4;a++){let n={};for(const[id,p]of Object.entries(state.p))n[id]=p*Math.max(FLOOR,lik(q,id,a));norm(n);e+=pd[a]*ent(Object.values(n))}return e}
+function expEnt(q){const pd=pred(q);let e=0;for(let a=0;a<4;a++){let n={};for(const[id,p]of Object.entries(state.p))n[id]=p*Math.max(FLOOR,calibratedEvidence(q,id,a));norm(n);e+=pd[a]*ent(Object.values(n))}return e}
 function novelty(q){const recent=state.hist.slice(-5);let v=1;if(recent.some(x=>x.theme===q.theme))v-=.22;if(recent.at(-1)?.axis===q.axis)v-=.28;if(recent.some(x=>x.structure===q.structure))v-=.38;return Math.max(0,v)}
 function challenge(q){const t=topCharacters(6);if(t.length<2)return 0;let s=0;for(let a=0;a<4;a++){let o=0,w=0;for(const x of t.slice(1)){o+=x.p*lik(q,x.c.id,a);w+=x.p}if(w)o/=w;s+=Math.abs(lik(q,t[0].c.id,a)-o)}return s/4}
+
+/* === BCDEGH anti-lock calibration layer ===
+   B: soften unusually rare/sharp single-answer evidence.
+   C: decay repeated evidence from the same semantic family.
+   D: reward independent dimensions in question selection.
+   E: strengthen questions that separate the current leader from rivals.
+   G: automatically detect narrow/extreme character profiles; do not hard-code names or priors.
+   H: actively value and preserve disconfirming evidence against the current leader. */
+const _charNarrowCache=new Map(),_answerDiagCache=new Map();
+function clamp(v,a=0,b=1){return Math.max(a,Math.min(b,v))}
+function characterNarrowness(id){
+  if(_charNarrowCache.has(id))return _charNarrowCache.get(id);
+  const c=CHARACTERS[CIDX[id]],dims=Object.keys(c.rel),ext=dims.reduce((s,k)=>s+Math.abs(c.rel[k]-.5)*2,0)/dims.length;
+  const ds=CHARACTERS.filter(x=>x.id!==id).map(x=>Math.sqrt(dims.reduce((s,k)=>s+(c.rel[k]-x.rel[k])**2,0)/dims.length)).sort((a,b)=>a-b);
+  const near=ds.slice(0,8).reduce((a,b)=>a+b,0)/Math.max(1,Math.min(8,ds.length));
+  const unique=clamp((near-.12)/.26);
+  const v=clamp(.62*ext+.38*unique);_charNarrowCache.set(id,v);return v
+}
+function answerDiagnostic(q,a){
+  const key=q.id+':'+a+':'+(q.follow?(state.followCtx?.answer??'none'):'base');if(_answerDiagCache.has(key))return _answerDiagCache.get(key);
+  const ls=CHARACTERS.map(c=>lik(q,c.id,a)),mean=ls.reduce((x,y)=>x+y,0)/ls.length;
+  const sd=Math.sqrt(ls.reduce((s,x)=>s+(x-mean)**2,0)/ls.length);
+  const rarity=clamp((.255-mean)/.13),sharp=clamp(sd/.15),v=clamp(.52*rarity+.48*sharp);
+  _answerDiagCache.set(key,v);return v
+}
+function recentFamilyCount(q,window=4){const f=axisFamily(q.axis);return state.hist.slice(-window).reduce((n,h)=>n+(axisFamily(h.axis)===f?1:0),0)}
+function repeatEvidenceFactor(q){const n=recentFamilyCount(q,4);return n===0?1:n===1?.88:n===2?.74:.62}
+function dimensionBalance(q){
+  if(!state.hist.length)return .08;const f=axisFamily(q.axis),r=state.hist.slice(-4),same=r.filter(h=>axisFamily(h.axis)===f).length;
+  if(!same)return .14;if(same===1)return .02;if(same===2)return-.12;return-.22
+}
+function rivalAnswerMean(q,a){const t=topCharacters(6);if(t.length<2)return .25;let z=0,s=0;for(const x of t.slice(1)){s+=x.p*lik(q,x.c.id,a);z+=x.p}return z?s/z:.25}
+function disconfirmPower(q){
+  const t=topCharacters(6);if(t.length<2)return 0;let best=0;const pd=pred(q);
+  for(let a=0;a<4;a++){const diff=rivalAnswerMean(q,a)-lik(q,t[0].c.id,a);best=Math.max(best,Math.max(0,diff)*Math.sqrt(Math.max(.08,pd[a])))}
+  return best
+}
+function evidenceExponent(q,id,a){
+  let e=(1-.24*answerDiagnostic(q,a))*repeatEvidenceFactor(q);
+  const bf=Math.max(FLOOR,lik(q,id,a))/.25;if(bf>1)e*=1-.22*characterNarrowness(id);
+  const leader=topCharacters(1)[0],lead=leader?.p||0;if(leader?.c.id===id&&lead>.15&&bf<1)e*=1.08;
+  return clamp(e,.42,1.08)
+}
+function calibratedEvidence(q,id,a){const l=Math.max(FLOOR,lik(q,id,a)),bf=l/.25;return .25*Math.pow(bf,evidenceExponent(q,id,a))}
 function temperature(){return Math.max(.18,.72-.50*(state.hist.length/state.planned))}
 function actFor(slot){return slot<=3?1:slot<=7?2:slot<=12?3:4}
 const ACT=['','Ⅰ · 进入','Ⅱ · 同行','Ⅲ · 代价','Ⅳ · 决定'];
@@ -182,7 +226,7 @@ function characterColor(c){return CHARACTER_PALETTE[stableHash(c.id||c.name)%CHA
 function roleStyle(role,c){const t=ROLE_THEME[role]||ROLE_THEME.main;return `--role-color:${t.color};--role-soft:${t.soft};--char-color:${characterColor(c)}`}
 function applyActTheme(act){const t=ACT_THEMES[act]||ACT_THEMES[1],el=$('#quiz');el.style.setProperty('--act-accent',t.accent);el.style.setProperty('--act-accent2',t.accent2);el.style.setProperty('--act-glow',t.glow);el.style.setProperty('--act-line',t.line)}
 function stageFit(q,act){if(q.follow)return 1;const d=Math.abs((q.stage||STAGE[q.id]||2)-act);return d===0?1:d===1?.82:d===2?.56:.34}
-function qScore(q,h0=ent(Object.values(state.p))){const ig=Math.max(0,h0-expEnt(q)),nv=q.follow?.88:novelty(q),ch=challenge(q),lead=topCharacters(1)[0]?.p||0,rw=lead>.20?.40:lead>.12?.22:.08;const mw=q.measureWeight??1,qp=q.qualityPenalty??0,aq=q.follow?0:autoQualityAdjustment(q);return{q,ig,score:mw*(1.08*ig)+.24*nv+rw*ch+(q.follow?.06:0)-qp+aq}}
+function qScore(q,h0=ent(Object.values(state.p))){const ig=Math.max(0,h0-expEnt(q)),nv=q.follow?.88:novelty(q),ch=challenge(q),dc=disconfirmPower(q),db=dimensionBalance(q),lead=topCharacters(1)[0]?.p||0,rw=lead>.20?.52:lead>.12?.32:.12,hw=lead>.20?.34:lead>.12?.20:.06;const mw=q.measureWeight??1,qp=q.qualityPenalty??0,aq=q.follow?0:autoQualityAdjustment(q);return{q,ig,score:mw*(1.08*ig)+.21*nv+rw*ch+hw*dc+.11*db+(q.follow?.06:0)-qp+aq}}
 function clusterEligible(q){if(!q.cluster||q.cluster.length<2)return true;const top=topCharacters(q.clusterTop||8),seen=new Set(top.map(x=>x.c.id));let hits=0,mass=0;for(const id of q.cluster){if(seen.has(id))hits++;mass+=state.p[id]||0}return hits>=2&&mass>=(q.clusterGate??.08)}
 
 /* === Semi-automatic question quality audit ===
@@ -376,7 +420,7 @@ function followAllowed(f,current){
 }
 function followCandidate(baseRank){const current=state.q;if(!current||current.follow||state.followups>=4||state.hist.length<2||state.hist.length>=15)return null;const f=FMAP[current.id];if(!f||state.used.has(f.id)||!followAllowed(f,current))return null;const fs=qScore(f),best=baseRank[0];if(!best)return f;const top=topCharacters(3),gap=(top[0]?.p||0)-(top[1]?.p||0),amb=gap<.028||state.hist.length<7;const worthy=fs.ig>=best.ig*.72||fs.score>=best.score-.07;return worthy&&amb?f:null}
 function choose(){const act=actFor(state.hist.length+1),base=rankBase(),f=followCandidate(base);return f||sampleRanked(base,act)}
-function update(q,a){const n={};for(const[id,p]of Object.entries(state.p))n[id]=p*Math.max(FLOOR,lik(q,id,a));norm(n);state.p=n}
+function update(q,a){const n={};for(const[id,p]of Object.entries(state.p))n[id]=p*Math.max(FLOOR,calibratedEvidence(q,id,a));norm(n);state.p=n}
 const EFFECTS=[['conceal',/隐瞒|保密|封存|不再提|不公开|不说|暂不公开/],['reveal',/公开|告诉|说清|承认|揭开|上报|完整说明|完整告诉/],['verify',/核查|核对|调查|复核|审查|验证|确认|整理.*证据|先了解|先查/],['delegate',/交给|投票|委员会|独立机构|第三方|共同决定|让.+决定|法院|团队.*决定/],['defer',/暂缓|等待|以后|先不|不立即|延后|暂时不/],['leave',/离开|退出|放弃|停止参与|返回/],['resist',/拒绝|反对|不执行|不接受|坚持.*边界/],['protect',/保护|救|帮助|陪|照护|补偿/],['trust',/相信|信任|给予.*信任/],['commit',/承担|负责|接任|主动处理|继续|坚持原/]];
 function effectOf(text){for(const[k,re]of EFFECTS)if(re.test(text))return k;return'neutral'}
 function consequenceLevel(q,e){if(q.follow||/后果加码|责任转移|不可逆|生存|生命|技术双用|公共资源/.test(q.structure))return 3;if(['risk','sacrifice','responsibility','loyalty','attachment','truth','power','identity','fairness'].includes(q.axis)||['conceal','commit','trust','protect'].includes(e))return 2;return 1}
